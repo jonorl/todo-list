@@ -1,6 +1,8 @@
+import "../css/style.css";
+
 let todoArray = [];
 
-const addBookButton = document.querySelector(".add");
+const addTodoButton = document.querySelector(".add");
 const cancelButton = document.querySelector(".cancel")
 const modalButton = document.querySelector("[data-open-modal]")
 const dialog = document.querySelector("dialog")
@@ -20,10 +22,36 @@ class todo {
 
 // Functions
 
-function addTodo(title, description, dueDate, priority, notes) {
-    let newTodo = new todo(title, description, dueDate, priority, notes);
+function addTodo(id, title, description, dueDate, priority, notes) {
+    let newTodo = new todo(id, title, description, dueDate, priority, notes);
     todoArray.push(newTodo);
 }
+
+function addTodoToArray(event){
+
+    event.preventDefault();
+
+    let title = document.querySelector(".title").value;
+    let description = document.querySelector(".description").value
+    let dueDate = document.querySelector(".dueDate").value
+    let priority = document.querySelector(".priority").value
+    let notes = document.querySelector(".notes").value
+
+    addTodo(todoArray.length, title, description, dueDate, priority, notes);
+
+    // Return the values to blank
+
+    title = "";
+    description = "";
+    dueDate = "";
+    priority = "";
+    notes = "";
+
+    dialog.close()
+    console.table(todoArray)
+}
+
+addTodoButton.addEventListener("click", addTodoToArray);
 
 // Modals
 

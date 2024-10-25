@@ -9,15 +9,19 @@
     <button data-open-modal>Add New todo</button>
 
     <dialog data-modal>
-        <form class="addNewBook">
+        <form class="addNewTodo">
             <fieldset>
                 <legend>New todo</legend>
-                <div class="addNewBookContainer">
-                    <label for="title">Title:</title><input class="title" type="text">
-                    <label for="description">Description</label><input class="description" type="text">
-                    <label for="dueDate">Due Date</label><input class="dueDate" type="date">
-                    <label for="priority">Priority</label><input class="priority" type="range">
-                    <label for="notes">Notes</label><input class="notes" type="text">
+                <div class="addNewTodoContainer">
+                    <label for="title">Title&nbsp</title><input class="title" type="text">
+                    <label for="description">Description&nbsp</label><input class="description" type="text">
+                    <label for="dueDate">Due Date&nbsp</label><input class="dueDate" type="date">
+                    <label for="priority">Priority&nbsp</label><select name="Priority" class="priority" type="range">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                        </select>
+                    <label for="notes">Notes&nbsp</label><input class="notes" type="text">
                     <button class="add">Add</button>
                     <button class="cancel">Cancel</button>
                 </div>
