@@ -1,2 +1,2 @@
 # restaurant-page
-Restaurant Page project for Project Odin
+To do list project for Project Odin
