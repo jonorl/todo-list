@@ -1,37 +1,21 @@
-// Import other js modules and main CSS
+let todoArray = [];
 
-import "../css/style.css";
-import { home } from "./home.js"
-import { menu } from "./menu.js"
-import { about } from "./about.js"
+// Constructor function
 
-// Button selector
+class todo {
+    constructor(title, description, dueDate, priority, notes) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.notes = notes;
+    }
+}
 
-const topButtons = document.querySelectorAll("button")
+// Functions
 
-// Event Listener
+function addTodo(title, description, dueDate, priority, notes) {
+    let newTodo = new todo(title, description, dueDate, priority, notes);
+    todoArray.push(newTodo);
+}
 
-topButtons.forEach(topButton => {
-
-    topButton.addEventListener("click",(event) => {
-        let target = event.target;
-
-        switch(target.id) {
-
-            case "home":
-                home();
-                break;
-
-            case "menu":
-                menu();
-                break;
-
-            case "about":
-                about();
-                break;
-        }
-    })
-});
-
-// Console log as requested
-console.log("hello restaurant")

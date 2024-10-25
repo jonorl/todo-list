@@ -3,45 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Page</title>
+    <title>Todo List</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <button id="home">Home</button>
-            <button id="menu">Menu</button>
-            <button id="about">About</button>
-        </nav>
-    </header>
+    <button data-open-modal>Add New todo</button>
 
-<div id="content">
-    <div class="content-top">
-            <h1>Jon's Cooking</h1>
-    </div>
+    <dialog data-modal>
+        <form class="addNewBook">
+            <fieldset>
+                <legend>New todo</legend>
+                <div class="addNewBookContainer">
+                    <label for="title">Title:</title><input class="title" type="text">
+                    <label for="description">Description</label><input class="description" type="text">
+                    <label for="dueDate">Due Date</label><input class="dueDate" type="date">
+                    <label for="priority">Priority</label><input class="priority" type="range">
+                    <label for="notes">Notes</label><input class="notes" type="text">
+                    <button class="add">Add</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </fieldset>
+        </form>
+    </dialog>
 
-    <div class="top-container">
-        <div class="quote">Jon can only cook like 4 dishes. I guess they're ok as long as your expectations are low.</div>
-        <div class="quoted-person">-Jon's best friend</div>
-    </div>
+    <div class="cardsContainer">
 
-    <div class="mid-container">
-        <div class="mid-container-header">Hours</div>
-        <div class="timeslots">
-            Monday: 6am to 9pm<br>
-            Tuesday: 6am to 9pm<br>
-            Wednesday: 6am to 9pm<br>
-            Thursday: 6am to 9pm<br>
-            Friday: Breakfast and lunch only<br>
-            Saturday: Breakfast only<br>
-            Sunday: Breakfast only<br>
-        </div>
-    </div>
-
-    <div class="bottom-container">
-        <div class="bottom-container-header">Location</div>
-        <div class="location">Jon's house 123, Jon's Land, Jon's country</div>
     </div>
 </div>
-
 </body>
 </html>
