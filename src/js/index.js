@@ -3,7 +3,6 @@ import "../css/style.css";
 
 let todoArray = [];
 let projects = {}
-let storedArray;
 let dialog;
 
 const modalButton = document.querySelector("[data-open-modal]")
@@ -23,21 +22,33 @@ class todo {
 
 // Functions
 
-function addTodo(id, title, description, dueDate, priority, notes) {
+function addTodo(id, title, description, dueDate, priority, notes, projectName) {
     
-    let newTodo = new todo(id, title, description, dueDate, priority, notes);
-    todoArray.push(newTodo);
-    let indexingValue = Object.keys(projects);
-    projects[indexingValue[indexingValue.length - 1]] = todoArray;
-    localStorage.setItem("todoArrayJSON", JSON.stringify(todoArray));
-    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
-    console.log("stored JSON")
-    console.table(storedArray);
+    // Need to add IF statements to check if project name is the same and if so then add it to its correspondent project
+
+    checkIfObjectExists(id, title, description, dueDate, priority, notes, projectName)
+
     console.log("stored Object (projects)")
     console.table(projects);
 }
 
-function addTodoToArray(event){
+function checkIfObjectExists (id, title, description, dueDate, priority, notes, projectName){
+    if (projectName in projects){
+        console.log("truthy")
+        let newTodo = new todo(id, title, description, dueDate, priority, notes);
+        todoArray.push(newTodo);
+        projects[projectName].push(newTodo);
+    }
+
+    else {
+        console.log("falsy")
+        let newTodo = new todo(id, title, description, dueDate, priority, notes);
+        todoArray.push(newTodo);
+        projects[projectName] = todoArray;
+    }
+}
+
+function addTodoToArray(event, projectName){
 
     event.preventDefault();
 
@@ -47,7 +58,7 @@ function addTodoToArray(event){
     let priority = document.querySelector(".priority").value
     let notes = document.querySelector(".notes").value
 
-    addTodo(todoArray.length, title, description, dueDate, priority, notes);
+    addTodo(todoArray.length, title, description, dueDate, priority, notes, projectName);
 
     // Return the values to blank
 
@@ -93,7 +104,6 @@ function createTodoDialog(event) {
     const legend = document.createElement("legend");
     const legendName = document.querySelector(".projectName").value
     legend.textContent = legendName;
-    projects[legendName] = [];
 
     const container = document.createElement("div");
     container.classList.add("addNewTodoContainer");
@@ -204,7 +214,7 @@ function createTodoDialog(event) {
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        addTodoToArray(event);
+        addTodoToArray(event, legendName);
     });
     
     removeButton.addEventListener("click", (event) => {
