@@ -13,15 +13,16 @@
             <fieldset>
                 <legend>New todo</legend>
                 <div class="addNewTodoContainer">
-                    <label for="title">Title&nbsp</title><input class="title" type="text">
-                    <label for="description">Description&nbsp</label><input class="description" type="text">
-                    <label for="dueDate">Due Date&nbsp</label><input class="dueDate" type="date">
-                    <label for="priority">Priority&nbsp</label><select name="Priority" class="priority" type="range">
+                    <div class="title-div"><label for="title">Title&nbsp</label><input class="title" type="text"></div>
+                    <div class="description-div"><label for="description">Description&nbsp</label><input class="description" type="text"></div>
+                    <div class="dueDate-div"><label for="dueDate">Due Date&nbsp</label><input class="dueDate" type="date"></div>
+                    <div class="priority-div"><label for="priority">Priority&nbsp</label><select class="priority" name="Priority" type="range">
                         <option value="Low">Low</option>
                         <option value="Medium" selected>Medium</option>
                         <option value="High">High</option>
                         </select>
-                    <label for="notes">Notes&nbsp</label><input class="notes" type="text">
+                    </div>
+                    <div class="notes-div"><label for="notes">Notes&nbsp</label><input class="notes" type="text"></div>
                     <button class="add">Add</button>
                     <button class="cancel">Cancel</button>
                 </div>

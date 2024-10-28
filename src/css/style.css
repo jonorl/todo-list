@@ -1,9 +1,5 @@
 /* default css */
 
-fieldset {
-  width: fit-content;
-}
-
 dialog {
   animation: fade-out 0.7s ease-out,
 }
@@ -14,6 +10,26 @@ dialog[open] {
 
 dialog[open]::backdrop {
   animation: backdrop-fade-in 0.7s ease-out forwards,
+}
+
+fieldset {
+  width: fit-content;
+}
+
+.addNewTodoContainer {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 2vh;
+}
+
+.title {
+  grid-row: 1;
+}
+
+.description {
+  grid-row: 2;
 }
 
 @keyframes fade-in {

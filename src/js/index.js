@@ -1,6 +1,9 @@
 import "../css/style.css";
 
+
 let todoArray = [];
+let projects = {"Project 1" : []}
+let storedArray;
 
 const addTodoButton = document.querySelector(".add");
 const cancelButton = document.querySelector(".cancel")
@@ -11,7 +14,8 @@ const modal = document.querySelector("[data-modal]")
 // Constructor function
 
 class todo {
-    constructor(title, description, dueDate, priority, notes) {
+    constructor(id, title, description, dueDate, priority, notes) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -25,6 +29,14 @@ class todo {
 function addTodo(id, title, description, dueDate, priority, notes) {
     let newTodo = new todo(id, title, description, dueDate, priority, notes);
     todoArray.push(newTodo);
+    let indexingValue = Object.keys(projects);
+    projects[indexingValue[indexingValue.length - 1]] = todoArray;
+    localStorage.setItem("todoArrayJSON", JSON.stringify(todoArray));
+    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+    console.log("stored JSON")
+    console.table(storedArray);
+    console.log("stored Object (projects)")
+    console.table(projects);
 }
 
 function addTodoToArray(event){
@@ -48,6 +60,7 @@ function addTodoToArray(event){
     notes = "";
 
     dialog.close()
+    console.log("stored Array")
     console.table(todoArray)
 }
 
@@ -65,16 +78,3 @@ cancelButton.addEventListener("click", (event) => {
     event.preventDefault();
     dialog.close();
 })
-
-dialog.addEventListener("mousedown", e => {
-    const dialogDimensions = dialog.getBoundingClientRect()
-    if (
-      e.clientX < dialogDimensions.left ||
-      e.clientX > dialogDimensions.right ||
-      e.clientY < dialogDimensions.top ||
-      e.clientY > dialogDimensions.bottom
-    ) {
-      e.preventDefault();
-      dialog.close()
-    }
-  })
