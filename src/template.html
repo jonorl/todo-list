@@ -6,31 +6,31 @@
     <title>Todo List</title>
 </head>
 <body>
-    <button data-open-modal>Add New todo</button>
-
-    <dialog data-modal>
-        <form class="addNewTodo">
-            <fieldset>
-                <legend>New todo</legend>
-                <div class="addNewTodoContainer">
-                    <div class="title-div"><label for="title">Title&nbsp</label><input class="title" type="text"></div>
-                    <div class="description-div"><label for="description">Description&nbsp</label><input class="description" type="text"></div>
-                    <div class="dueDate-div"><label for="dueDate">Due Date&nbsp</label><input class="dueDate" type="date"></div>
-                    <div class="priority-div"><label for="priority">Priority&nbsp</label><select class="priority" name="Priority" type="range">
-                        <option value="Low">Low</option>
-                        <option value="Medium" selected>Medium</option>
-                        <option value="High">High</option>
-                        </select>
+    <fieldset>
+    <legend> <input class="projectName" type="text" value="Project1"></legend>
+        <button data-open-modal>Add New todo</button>
+        <dialog data-modal>
+            <form class="addNewTodo">
+                <fieldset>
+                    <legend>New todo</legend>
+                    <div class="addNewTodoContainer">
+                        <div class="title-div"><label for="title">Title&nbsp</label><input class="title" type="text"></div>
+                        <div class="description-div"><label for="description">Description&nbsp</label><input class="description" type="text"></div>
+                        <div class="dueDate-div"><label for="dueDate">Due Date&nbsp</label><input class="dueDate" type="date"></div>
+                        <div class="priority-div"><label for="priority">Priority&nbsp</label><select class="priority" name="Priority" type="range">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="notes-div"><label for="notes">Notes&nbsp</label><input class="notes" type="text"></div>
+                        <button class="add">Add</button>
+                        <button class="cancel">Cancel</button>
                     </div>
-                    <div class="notes-div"><label for="notes">Notes&nbsp</label><input class="notes" type="text"></div>
-                    <button class="add">Add</button>
-                    <button class="cancel">Cancel</button>
-                </div>
-            </fieldset>
-        </form>
-    </dialog>
+                </fieldset>
+            </form>
+        </dialog>
+    </fieldset>
 
-    </div>
-</div>
 </body>
 </html>
