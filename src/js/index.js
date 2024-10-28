@@ -2,13 +2,11 @@ import "../css/style.css";
 
 
 let todoArray = [];
-let projects = {"Project 1" : []}
+let projects = {}
 let storedArray;
 let dialog;
 
 const modalButton = document.querySelector("[data-open-modal]")
-
-
 
 // Constructor function
 
@@ -72,7 +70,7 @@ modalButton.addEventListener("click", (event) => {
     createTodoDialog(event);
 })
 
-
+// DOM Function
 
 function createTodoDialog(event) {
 
@@ -93,7 +91,9 @@ function createTodoDialog(event) {
 
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legend.textContent = "New todo";
+    const legendName = document.querySelector(".projectName").value
+    legend.textContent = legendName;
+    projects[legendName] = [];
 
     const container = document.createElement("div");
     container.classList.add("addNewTodoContainer");
