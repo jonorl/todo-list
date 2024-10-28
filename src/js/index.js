@@ -34,14 +34,12 @@ function addTodo(id, title, description, dueDate, priority, notes, projectName) 
 
 function checkIfObjectExists (id, title, description, dueDate, priority, notes, projectName){
     if (projectName in projects){
-        console.log("truthy")
         let newTodo = new todo(id, title, description, dueDate, priority, notes);
         todoArray.push(newTodo);
         projects[projectName].push(newTodo);
     }
 
     else {
-        console.log("falsy")
         let newTodo = new todo(id, title, description, dueDate, priority, notes);
         todoArray.push(newTodo);
         projects[projectName] = todoArray;
