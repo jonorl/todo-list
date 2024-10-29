@@ -1,12 +1,13 @@
 import "../css/style.css";
 
-
 let todoArray = [];
 let projects = {};
 let storedArray;
 let dialog;
+let legendName;
 
-const modalButton = document.querySelector("[data-open-modal]")
+// Event Listener delegation
+const btns = document.querySelectorAll("button")
 
 // Constructor function
 
@@ -23,60 +24,113 @@ class todo {
 
 // Functions
 
-function addTodo(id, title, description, dueDate, priority, notes, projectName) {
-    
-    let newTodo = new todo(id, title, description, dueDate, priority, notes);
-    todoArray.push(newTodo);
-
-    if (projectName in projects){
-        projects[projectName].push(newTodo);
-    }
-
-    else {
-        projects[projectName] = [];
-        projects[projectName].push(newTodo);
-    }
-
-    localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
-    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
-    console.table(storedArray);
-}
-
-
-function addTodoToArray(event, projectName){
+function addNewProjectTodo(event){
 
     event.preventDefault();
+
+    // Grab DOM variables
+
+    let DOMElements = grabDOMElements(legendName);
+
+    // Add new project if necessary and its new To-do list
+
+    addTodoToJSON(
+        DOMElements.numberOfTodos, 
+        DOMElements.title, 
+        DOMElements.description, 
+        DOMElements.dueDate, 
+        DOMElements.priority, 
+        DOMElements.notes, 
+        legendName
+        );
+
+    // Return the values to blank
+
+    resetValues(
+        DOMElements.numberOfTodos, 
+        DOMElements.title, 
+        DOMElements.description, 
+        DOMElements.dueDate, 
+        DOMElements.priority, 
+        DOMElements.notes,
+        )
+
+    dialog.close()
+}
+
+function grabDOMElements() {
 
     let title = document.querySelector(".title").value;
     let description = document.querySelector(".description").value
     let dueDate = document.querySelector(".dueDate").value
     let priority = document.querySelector(".priority").value
     let notes = document.querySelector(".notes").value
-    let numberOfTodos = (projectName in projects) ? projects[projectName].length : 0;
+    let numberOfTodos = (legendName in projects) ? projects[legendName].length : 0;
 
-    addTodo(numberOfTodos, title, description, dueDate, priority, notes, projectName);
+    return {title, description, dueDate, priority, notes, numberOfTodos }
+}
 
-    // Return the values to blank
+function addTodoToJSON(id, title, description, dueDate, priority, notes) {
+    
+    // Add new Todo list to array
+    let newTodo = new todo(id, title, description, dueDate, priority, notes);
+    todoArray.push(newTodo);
 
+    // Check if project exists in projects object and adds it if not
+    if (legendName in projects){
+        projects[legendName].push(newTodo);
+    }
+
+    else {
+        projects[legendName] = [];
+        projects[legendName].push(newTodo);
+    }
+
+    // Adds Project/todo to localstorage as JSON
+    localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
+    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+    console.table(storedArray);
+}
+
+function resetValues(title, description, dueDate, priority, notes){
     title = "";
     description = "";
     dueDate = "";
     priority = "";
     notes = "";
     todoArray = [];
-
-    dialog.close()
 }
 
+// Event Listener
 
+btns.forEach(btn => {
 
-// Modals
+    document.body.addEventListener("click", (event) => {
 
-modalButton.addEventListener("click", (event) => {
-    createTodoDialog(event);
+        let target = event.target;
+    
+        switch(target.id) {
+            case "modal":
+                createTodoDialog(event);
+                break;
+
+            case "add":
+                event.preventDefault();
+                addNewProjectTodo(event);
+                console.log("times");
+                break;
+
+            case "cancel":
+                event.preventDefault();
+                event.stopPropagation();
+                dialog.close();
+                break;
+        }
+    });
+
 })
 
-// DOM Function
+// Function to create modal
 
 function createTodoDialog(event) {
 
@@ -97,7 +151,7 @@ function createTodoDialog(event) {
 
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    const legendName = document.querySelector(".projectName").value
+    legendName = document.querySelector(".projectName").value
     legend.textContent = legendName;
 
     const container = document.createElement("div");
@@ -175,11 +229,13 @@ function createTodoDialog(event) {
 
     // Buttons
     const addButton = document.createElement("button");
+    addButton.id = "add";
     addButton.classList.add("add");
     addButton.textContent = "Add";
 
     const cancelButton = document.createElement("button");
     cancelButton.classList.add("cancel");
+    cancelButton.id = "cancel";
     cancelButton.textContent = "Cancel";
     cancelButton.setAttribute("type", "button");
 
@@ -199,23 +255,8 @@ function createTodoDialog(event) {
     form.appendChild(fieldset);
     dialog.appendChild(form);
 
-
-
     document.body.appendChild(dialog);
 
-    let removeButton = document.querySelector(".cancel")
-
     dialog.showModal();
-
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        addTodoToArray(event, legendName);
-    });
-    
-    removeButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        dialog.close();
-    })
 }
 
