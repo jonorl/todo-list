@@ -136,7 +136,7 @@ export function writeBackToDOM(){
     const descInput = document.createElement("input");
     descInput.classList.add("description");
     descInput.setAttribute("type", "text")
-    descInput.setAttribute("value", "BringTextFromJSON")
+    descInput.setAttribute("value", storedArray[legendName][index].description)
     descDiv.append(descLabel, descInput);
 
     // Due Date div
@@ -148,7 +148,7 @@ export function writeBackToDOM(){
     const dueDateInput = document.createElement("input");
     dueDateInput.classList.add("dueDate");
     dueDateInput.setAttribute("type", "date");
-    dueDateInput.setAttribute("value", "BringTextFromJSON");
+    dueDateInput.setAttribute("value", storedArray[legendName][index].dueDate);
     dueDateDiv.append(dueDateLabel, dueDateInput);
 
     // Priority div
@@ -185,7 +185,7 @@ export function writeBackToDOM(){
     const notesInput = document.createElement("input");
     notesInput.classList.add("notes");
     notesInput.setAttribute("type", "text");
-    notesInput.setAttribute("value", "BringTextFromJSON")
+    notesInput.setAttribute("value", storedArray[legendName][index].notes)
     notesDiv.append(notesLabel, notesInput);
 
     // Buttons
