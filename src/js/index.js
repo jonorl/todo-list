@@ -25,41 +25,22 @@ class todo {
 
 function addTodo(id, title, description, dueDate, priority, notes, projectName) {
     
-    // Need to add IF statements to check if project name is the same and if so then add it to its correspondent project
-
-    checkIfObjectExists(id, title, description, dueDate, priority, notes, projectName)
-
-    console.log("stored Object (projects)")
-    console.table(projects);
-}
-
-function checkIfObjectExists (id, title, description, dueDate, priority, notes, projectName){
-
     let newTodo = new todo(id, title, description, dueDate, priority, notes);
     todoArray.push(newTodo);
 
     if (projectName in projects){
-
         projects[projectName].push(newTodo);
-        localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
-        storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
-
-        console.log("JSON content");
-        console.table(storedArray);
     }
 
     else {
-
         projects[projectName] = [];
         projects[projectName].push(newTodo);
-
-        localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
-        storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
-
-        console.log("JSON content");
-        console.table(storedArray);
     }
+
+    localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
+    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 }
+
 
 function addTodoToArray(event, projectName){
 
@@ -80,12 +61,9 @@ function addTodoToArray(event, projectName){
     dueDate = "";
     priority = "";
     notes = "";
+    todoArray = [];
 
     dialog.close()
-    console.log("stored Array")
-    console.table(todoArray)
-
-    todoArray = [];
 }
 
 
