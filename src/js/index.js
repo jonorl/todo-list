@@ -2,7 +2,8 @@ import "../css/style.css";
 
 
 let todoArray = [];
-let projects = {}
+let projects = {};
+let storedArray;
 let dialog;
 
 const modalButton = document.querySelector("[data-open-modal]")
@@ -33,16 +34,30 @@ function addTodo(id, title, description, dueDate, priority, notes, projectName) 
 }
 
 function checkIfObjectExists (id, title, description, dueDate, priority, notes, projectName){
+
+    let newTodo = new todo(id, title, description, dueDate, priority, notes);
+    todoArray.push(newTodo);
+
     if (projectName in projects){
-        let newTodo = new todo(id, title, description, dueDate, priority, notes);
-        todoArray.push(newTodo);
+
         projects[projectName].push(newTodo);
+        localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
+        storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+
+        console.log("JSON content");
+        console.table(storedArray);
     }
 
     else {
-        let newTodo = new todo(id, title, description, dueDate, priority, notes);
-        todoArray.push(newTodo);
-        projects[projectName] = todoArray;
+
+        projects[projectName] = [];
+        projects[projectName].push(newTodo);
+
+        localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
+        storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+
+        console.log("JSON content");
+        console.table(storedArray);
     }
 }
 
@@ -69,6 +84,8 @@ function addTodoToArray(event, projectName){
     dialog.close()
     console.log("stored Array")
     console.table(todoArray)
+
+    todoArray = [];
 }
 
 
