@@ -39,6 +39,7 @@ function addTodo(id, title, description, dueDate, priority, notes, projectName) 
 
     localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+    console.table(storedArray);
 }
 
 
@@ -51,8 +52,9 @@ function addTodoToArray(event, projectName){
     let dueDate = document.querySelector(".dueDate").value
     let priority = document.querySelector(".priority").value
     let notes = document.querySelector(".notes").value
+    let numberOfTodos = (projectName in projects) ? projects[projectName].length : 0;
 
-    addTodo(todoArray.length, title, description, dueDate, priority, notes, projectName);
+    addTodo(numberOfTodos, title, description, dueDate, priority, notes, projectName);
 
     // Return the values to blank
 
