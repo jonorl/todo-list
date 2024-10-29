@@ -1,5 +1,20 @@
 /* default css */
 
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  height: 100vh;
+}
+
+.main-fieldset {
+  height: fit-content;
+}
+
+.left-panel {
+  grid-column: 1;
+  display: grid;
+}
+
 dialog {
   animation: fade-out 0.7s ease-out,
 }

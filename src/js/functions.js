@@ -85,6 +85,130 @@ function resetValues(title, description, dueDate, priority, notes){
     priority = "";
     notes = "";
     todoArray = [];
+
+    console.log(legendName)
+    console.log(storedArray)
+}
+
+// Function to display to-do back to the DOM
+
+export function writeBackToDOM(){
+
+    let titleToFind = "asd"; // hardcoded name for now
+    let index = storedArray.Project1.findIndex(project => project.title === titleToFind);
+
+    // Main Container
+    const rightContainer = document.querySelector(".right-panel")
+
+    // Form
+    const form = document.createElement("form");
+    form.classList.add("todo");
+    form.setAttribute("onsubmit", "return false;");
+
+    // Fieldset
+    const fieldset = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legendName = document.querySelector(".projectName").value
+    legend.textContent = legendName;
+
+    // Container div
+    const container = document.createElement("div")
+    container.classList.add("todoContainer")
+
+    // Title div
+    const titleDiv = document.createElement("div");
+    titleDiv.classList.add("title-div");
+    const titleLabel = document.createElement("label");
+    titleLabel.setAttribute("for", "title");
+    titleLabel.textContent = "Title\u00A0";
+    const titleInput = document.createElement("input");
+    titleInput.classList.add("title");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("value", storedArray[legendName][index].title)
+    titleDiv.append(titleLabel, titleInput);
+
+    // Description div
+    const descDiv = document.createElement("div");
+    descDiv.classList.add("description-div");
+    const descLabel = document.createElement("label");
+    descLabel.setAttribute("for", "description");
+    descLabel.textContent = "Description\u00A0";
+    const descInput = document.createElement("input");
+    descInput.classList.add("description");
+    descInput.setAttribute("type", "text")
+    descInput.setAttribute("value", "BringTextFromJSON")
+    descDiv.append(descLabel, descInput);
+
+    // Due Date div
+    const dueDateDiv = document.createElement("div");
+    dueDateDiv.classList.add("dueDate-div");
+    const dueDateLabel = document.createElement("label");
+    dueDateLabel.setAttribute("for", "dueDate");
+    dueDateLabel.textContent = "Due Date\u00A0";
+    const dueDateInput = document.createElement("input");
+    dueDateInput.classList.add("dueDate");
+    dueDateInput.setAttribute("type", "date");
+    dueDateInput.setAttribute("value", "BringTextFromJSON");
+    dueDateDiv.append(dueDateLabel, dueDateInput);
+
+    // Priority div
+    const priorityDiv = document.createElement("div");
+    priorityDiv.classList.add("priority-div");
+    const priorityLabel = document.createElement("label");
+    priorityLabel.setAttribute("for", "priority");
+    priorityLabel.textContent = "Priority\u00A0";
+    const prioritySelect = document.createElement("select");
+    prioritySelect.classList.add("priority");
+    prioritySelect.setAttribute("name", "Priority");
+    prioritySelect.setAttribute("type", "range");
+
+    const options = [
+        /* { value: "Low", text: "Low" }, somehow bring this from JSON */
+    ];
+
+    // I don't think I'll need this
+    // options.forEach(opt => {
+    //     const option = document.createElement("option");
+    //     option.value = opt.value;
+    //     option.textContent = opt.text;
+    //     if (opt.selected) option.selected = true;
+    //     prioritySelect.appendChild(option);
+    // });
+    // priorityDiv.append(priorityLabel, prioritySelect);
+
+    // Notes div
+    const notesDiv = document.createElement("div");
+    notesDiv.classList.add("notes-div");
+    const notesLabel = document.createElement("label");
+    notesLabel.setAttribute("for", "notes");
+    notesLabel.textContent = "Notes\u00A0";
+    const notesInput = document.createElement("input");
+    notesInput.classList.add("notes");
+    notesInput.setAttribute("type", "text");
+    notesInput.setAttribute("value", "BringTextFromJSON")
+    notesDiv.append(notesLabel, notesInput);
+
+    // Buttons
+    const delButton = document.createElement("button");
+    delButton.id = "delete";
+    delButton.classList.add("delete");
+    delButton.textContent = "Delete";
+
+        // Append all elements
+        container.append(
+            titleDiv,
+            descDiv,
+            dueDateDiv,
+            priorityDiv,
+            notesDiv,
+            delButton,
+        );
+    
+        fieldset.appendChild(legend);
+        fieldset.appendChild(container);
+        form.appendChild(fieldset);
+    
+        rightContainer.appendChild(form);
 }
 
 // Function to create modal
