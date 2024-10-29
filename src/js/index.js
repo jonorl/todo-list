@@ -1,13 +1,39 @@
+// Module import
+
 import "../css/style.css";
 
-let todoArray = [];
-let projects = {};
-let storedArray;
-let dialog;
-let legendName;
+// global variables
 
-// Event Listener delegation
-const btns = document.querySelectorAll("button")
+let todoArray = []; // This will store the individual todo task
+let projects = {}; // This is the object that then will be passed as JSON
+let storedArray; // This is the JSON saved in local storage
+let dialog; // this is the modal to enter the todo(s)
+let legendName; // This stores the name of the project to verify if exists
+
+// Event Listeners
+const btns = document.querySelectorAll("button");
+
+document.body.addEventListener("click", (event) => {
+
+    let target = event.target;
+
+    switch(target.id) {
+        case "modal":
+            createTodoDialog(event);
+            break;
+
+        case "add":
+            event.preventDefault();
+            addNewProjectTodo(event);
+            break;
+
+        case "cancel":
+            event.preventDefault();
+            event.stopPropagation();
+            dialog.close();
+            break;
+    }
+});
 
 // Constructor function
 
@@ -20,7 +46,7 @@ class todo {
         this.priority = priority;
         this.notes = notes;
     }
-}
+};
 
 // Functions
 
@@ -56,7 +82,7 @@ function addNewProjectTodo(event){
         )
 
     dialog.close()
-}
+};
 
 function grabDOMElements() {
 
@@ -68,7 +94,7 @@ function grabDOMElements() {
     let numberOfTodos = (legendName in projects) ? projects[legendName].length : 0;
 
     return {title, description, dueDate, priority, notes, numberOfTodos }
-}
+};
 
 function addTodoToJSON(id, title, description, dueDate, priority, notes) {
     
@@ -100,35 +126,6 @@ function resetValues(title, description, dueDate, priority, notes){
     notes = "";
     todoArray = [];
 }
-
-// Event Listener
-
-btns.forEach(btn => {
-
-    document.body.addEventListener("click", (event) => {
-
-        let target = event.target;
-    
-        switch(target.id) {
-            case "modal":
-                createTodoDialog(event);
-                break;
-
-            case "add":
-                event.preventDefault();
-                addNewProjectTodo(event);
-                console.log("times");
-                break;
-
-            case "cancel":
-                event.preventDefault();
-                event.stopPropagation();
-                dialog.close();
-                break;
-        }
-    });
-
-})
 
 // Function to create modal
 
