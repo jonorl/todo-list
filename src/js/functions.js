@@ -18,6 +18,8 @@ export function addNewProjectTodo(event){
 
     let DOMElements = grabDOMElements(legendName);
 
+    populateLeftPanel(DOMElements.title);
+
     // Add new project if necessary and its new To-do list
 
     addTodoToJSON(
@@ -348,4 +350,61 @@ export function createTodoDialog(event) {
     document.body.appendChild(dialog);
 
     dialog.showModal();
+}
+
+function populateLeftPanel(title) {
+
+    let leftPanel = document.querySelector(".projects");
+
+    // If the project exists add new task
+
+    if (legendName in projects){
+
+        // Select the right project name
+        const projectDiv = document.querySelector("." + legendName);
+
+        // Task Div
+        const taskButton = document.createElement("button");
+        taskButton.id = "task";
+        taskButton.classList.add("task");
+        taskButton.textContent = title;
+
+        // Delete Task Button
+        const XButton = document.createElement("button");
+        XButton.id = "X";
+        XButton.classList.add(title);
+        XButton.textContent = "X";
+
+        //Append
+        leftPanel.appendChild(projectDiv);
+        projectDiv.appendChild(taskButton);
+        projectDiv.appendChild(XButton);
+
+    }
+
+    // If project doesn't exist, add it and the new task
+    else {
+
+        // Project Div
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add(legendName);
+        projectDiv.textContent = legendName;
+
+        // Task Div
+        const taskButton = document.createElement("button");
+        taskButton.id = "task";
+        taskButton.classList.add("task");
+        taskButton.textContent = title;
+
+        // Delete Task Button
+        const XButton = document.createElement("button");
+        XButton.id = "X";
+        XButton.classList.add(title);
+        XButton.textContent = "X";
+
+        //Append
+        leftPanel.appendChild(projectDiv);
+        projectDiv.appendChild(taskButton);
+        projectDiv.appendChild(XButton);
+    }
 }
