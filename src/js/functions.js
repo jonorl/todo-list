@@ -32,7 +32,7 @@ export function addNewProjectTodo(event){
         legendName
         );
 
-    // Return the values to blank
+    // Return the values inside the dialog to blank
 
     resetValues(
         DOMElements.numberOfTodos, 
@@ -109,7 +109,6 @@ export function writeBackToDOM(event){
     // Fieldset
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legendName = document.querySelector(".projectName").value
     legend.textContent = projectTitle;
 
     // Container div
@@ -123,7 +122,7 @@ export function writeBackToDOM(event){
     titleLabel.setAttribute("for", "title");
     titleLabel.textContent = "Title\u00A0";
     const titleInput = document.createElement("input");
-    titleInput.classList.add("title");
+    titleInput.classList.add("title-input");
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("value", storedArray[projectTitle][index].title)
     titleDiv.append(titleLabel, titleInput);
@@ -135,7 +134,7 @@ export function writeBackToDOM(event){
     descLabel.setAttribute("for", "description");
     descLabel.textContent = "Description\u00A0";
     const descInput = document.createElement("input");
-    descInput.classList.add("description");
+    descInput.classList.add("description-input");
     descInput.setAttribute("type", "text")
     descInput.setAttribute("value", storedArray[projectTitle][index].description)
     descDiv.append(descLabel, descInput);
@@ -147,7 +146,7 @@ export function writeBackToDOM(event){
     dueDateLabel.setAttribute("for", "dueDate");
     dueDateLabel.textContent = "Due Date\u00A0";
     const dueDateInput = document.createElement("input");
-    dueDateInput.classList.add("dueDate");
+    dueDateInput.classList.add("dueDate-input");
     dueDateInput.setAttribute("type", "date");
     dueDateInput.setAttribute("value", storedArray[projectTitle][index].dueDate);
     dueDateDiv.append(dueDateLabel, dueDateInput);
@@ -159,7 +158,7 @@ export function writeBackToDOM(event){
     priorityLabel.setAttribute("for", "priority");
     priorityLabel.textContent = "Priority\u00A0";
     const prioritySelect = document.createElement("select");
-    prioritySelect.classList.add("priority");
+    prioritySelect.classList.add("priority-input");
     prioritySelect.setAttribute("name", "Priority");
     prioritySelect.setAttribute("type", "range");
 
@@ -186,7 +185,7 @@ export function writeBackToDOM(event){
     notesLabel.setAttribute("for", "notes");
     notesLabel.textContent = "Notes\u00A0";
     const notesInput = document.createElement("input");
-    notesInput.classList.add("notes");
+    notesInput.classList.add("notes-input");
     notesInput.setAttribute("type", "text");
     notesInput.setAttribute("value", storedArray[projectTitle][index].notes)
     notesDiv.append(notesLabel, notesInput);
@@ -247,7 +246,7 @@ export function createTodoDialog(event) {
 
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legendName = document.querySelector(".projectName").value
+    legendName = document.querySelector(".projectName").value // Adds project name to legendName variable
     legend.textContent = legendName;
 
     const container = document.createElement("div");
@@ -358,59 +357,58 @@ export function createTodoDialog(event) {
 
 function populateLeftPanel(id, title) {
 
-    let leftPanel = document.querySelector(".projects");
-
     // If the project exists add new task
 
     if (legendName in projects){
 
         // Select the right project name
         const projectDiv = document.querySelector("." + legendName);
-
-        // Task Div
-        const taskButton = document.createElement("button");
-        taskButton.id = "task";
-        taskButton.classList.add(legendName);
-        taskButton.classList.add(id);
-        taskButton.textContent = title;
-
-        // Delete Task Button
-        const XButton = document.createElement("button");
-        XButton.id = "X";
-        XButton.classList.add(id);
-        XButton.textContent = "X";
-
-        //Append
-        leftPanel.appendChild(projectDiv);
-        projectDiv.appendChild(taskButton);
-        projectDiv.appendChild(XButton);
-
+        populateTaskDOM(id, title, projectDiv)
     }
 
     // If project doesn't exist, add it and the new task
-    else {
 
+    else {
         // Project Div
         const projectDiv = document.createElement("div");
         projectDiv.classList.add(legendName);
         projectDiv.textContent = legendName;
-
-        // Task Div
-        const taskButton = document.createElement("button");
-        taskButton.id = "task";
-        taskButton.classList.add(legendName);
-        taskButton.classList.add(id);
-        taskButton.textContent = title;
-
-        // Delete Task Button
-        const XButton = document.createElement("button");
-        XButton.id = "X";
-        XButton.classList.add(id);
-        XButton.textContent = "X";
-
-        //Append
-        leftPanel.appendChild(projectDiv);
-        projectDiv.appendChild(taskButton);
-        projectDiv.appendChild(XButton);
+        populateTaskDOM(id, title, projectDiv)
     }
+}
+
+function populateTaskDOM(id, title, projectDiv){
+
+    let leftPanel = document.querySelector(".projects");
+
+    // Task Div
+    const taskButton = document.createElement("button");
+    taskButton.id = "task";
+    taskButton.classList.add(legendName);
+    taskButton.classList.add(id);
+    taskButton.textContent = title;
+
+    // Delete Task Button
+    const XButton = document.createElement("button");
+    XButton.id = "X";
+    XButton.classList.add(legendName);
+    XButton.classList.add(id);
+    XButton.textContent = "X";
+
+    //Append
+    leftPanel.appendChild(projectDiv);
+    projectDiv.appendChild(taskButton);
+    projectDiv.appendChild(XButton);
+
+}
+
+export function XDelete(event){
+    
+    let buttonClasses = event.target.className.split(" ") 
+    let projectTitle = buttonClasses[0];
+    let taskID = Number(buttonClasses[1]);
+    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
+    
+    storedArray[projectTitle].splice(index, 1);
+    console.table(storedArray);
 }

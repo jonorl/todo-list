@@ -1,7 +1,7 @@
 // Module import
 
 import "../css/style.css";
-import {addNewProjectTodo, createTodoDialog, writeBackToDOM, dialog} from "./functions"
+import {addNewProjectTodo, createTodoDialog, writeBackToDOM, XDelete, dialog} from "./functions"
 
 // Event Listeners
 const btns = document.querySelectorAll("button");
@@ -29,6 +29,11 @@ document.body.addEventListener("click", (event) => {
         case "task":
             event.preventDefault();
             writeBackToDOM(event);
+            break;
+        
+        case "X":
+            event.preventDefault();
+            XDelete(event);
             break;
     }
 });
