@@ -94,10 +94,12 @@ function resetValues(title, description, dueDate, priority, notes){
 
 // Function to display to-do back to the DOM
 
-export function writeBackToDOM(){
+export function writeBackToDOM(event){
 
-    let titleToFind = "asd"; // hardcoded name for now
-    let index = storedArray.Project1.findIndex(project => project.title === titleToFind);
+    console.log("button class name " + event.target.className);
+    console.log("Legend name " + legendName);
+    let taskTitle = event.target.className;
+    let index = storedArray[legendName].findIndex(project => project.title === taskTitle);
 
     // Main Container
     const rightContainer = document.querySelector(".right-panel")
@@ -366,7 +368,7 @@ function populateLeftPanel(title) {
         // Task Div
         const taskButton = document.createElement("button");
         taskButton.id = "task";
-        taskButton.classList.add("task");
+        taskButton.classList.add(title);
         taskButton.textContent = title;
 
         // Delete Task Button
@@ -393,7 +395,7 @@ function populateLeftPanel(title) {
         // Task Div
         const taskButton = document.createElement("button");
         taskButton.id = "task";
-        taskButton.classList.add("task");
+        taskButton.classList.add(title);
         taskButton.textContent = title;
 
         // Delete Task Button
