@@ -163,18 +163,20 @@ export function writeBackToDOM(){
     prioritySelect.setAttribute("type", "range");
 
     const options = [
-        /* { value: "Low", text: "Low" }, somehow bring this from JSON */
+        { value: "Low", text: "Low" },
+        { value: "Medium", text: "Medium"},
+        { value: "High", text: "High" } 
     ];
 
-    // I don't think I'll need this
-    // options.forEach(opt => {
-    //     const option = document.createElement("option");
-    //     option.value = opt.value;
-    //     option.textContent = opt.text;
-    //     if (opt.selected) option.selected = true;
-    //     prioritySelect.appendChild(option);
-    // });
-    // priorityDiv.append(priorityLabel, prioritySelect);
+    options.forEach(opt => {
+        const option = document.createElement("option");
+        let priority = storedArray[legendName][index].priority;
+        option.value = opt.value;
+        option.textContent = opt.text;
+        if (priority === opt.value) {option.selected = true}
+        prioritySelect.appendChild(option);
+    });
+    priorityDiv.append(priorityLabel, prioritySelect);
 
     // Notes div
     const notesDiv = document.createElement("div");
@@ -189,6 +191,12 @@ export function writeBackToDOM(){
     notesDiv.append(notesLabel, notesInput);
 
     // Buttons
+
+    const saveButton = document.createElement("button");
+    saveButton.id = "saveChanges";
+    saveButton.classList.add("saveChanges");
+    saveButton.textContent = "Save"; 
+
     const delButton = document.createElement("button");
     delButton.id = "delete";
     delButton.classList.add("delete");
@@ -201,6 +209,7 @@ export function writeBackToDOM(){
             dueDateDiv,
             priorityDiv,
             notesDiv,
+            saveButton,
             delButton,
         );
     
