@@ -404,11 +404,13 @@ function populateTaskDOM(id, title, projectDiv){
 
 export function XDelete(event){
     
-    let buttonClasses = event.target.className.split(" ") 
+    let buttonClasses = event.target.className.split(" ");
     let projectTitle = buttonClasses[0];
-    let taskID = Number(buttonClasses[1]);
-    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
-    
+    let taskID = buttonClasses[1];
+    let index = storedArray[projectTitle].findIndex(project => project.id === Number(taskID));
+    let buttons = document.querySelectorAll(`.${projectTitle}[class*=" ${taskID}"]`);
+    buttons.forEach(button => button.remove());
+
     storedArray[projectTitle].splice(index, 1);
     console.table(storedArray);
 }
