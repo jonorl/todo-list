@@ -96,10 +96,11 @@ function resetValues(title, description, dueDate, priority, notes){
 
 export function writeBackToDOM(event){
 
-    console.log("button class name " + event.target.className);
-    console.log("Legend name " + legendName);
-    let taskTitle = event.target.className;
-    let index = storedArray[legendName].findIndex(project => project.title === taskTitle);
+    let buttonClasses = event.target.className.split(" ") 
+    let projectTitle = buttonClasses[0];
+    let taskTitle = buttonClasses[1];
+    console.log(projectTitle + taskTitle)
+    let index = storedArray[projectTitle].findIndex(project => project.title === taskTitle);
 
     // Main Container
     const rightContainer = document.querySelector(".right-panel")
@@ -113,7 +114,7 @@ export function writeBackToDOM(event){
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
     legendName = document.querySelector(".projectName").value
-    legend.textContent = legendName;
+    legend.textContent = projectTitle;
 
     // Container div
     const container = document.createElement("div")
@@ -128,7 +129,7 @@ export function writeBackToDOM(event){
     const titleInput = document.createElement("input");
     titleInput.classList.add("title");
     titleInput.setAttribute("type", "text");
-    titleInput.setAttribute("value", storedArray[legendName][index].title)
+    titleInput.setAttribute("value", storedArray[projectTitle][index].title)
     titleDiv.append(titleLabel, titleInput);
 
     // Description div
@@ -140,7 +141,7 @@ export function writeBackToDOM(event){
     const descInput = document.createElement("input");
     descInput.classList.add("description");
     descInput.setAttribute("type", "text")
-    descInput.setAttribute("value", storedArray[legendName][index].description)
+    descInput.setAttribute("value", storedArray[projectTitle][index].description)
     descDiv.append(descLabel, descInput);
 
     // Due Date div
@@ -152,7 +153,7 @@ export function writeBackToDOM(event){
     const dueDateInput = document.createElement("input");
     dueDateInput.classList.add("dueDate");
     dueDateInput.setAttribute("type", "date");
-    dueDateInput.setAttribute("value", storedArray[legendName][index].dueDate);
+    dueDateInput.setAttribute("value", storedArray[projectTitle][index].dueDate);
     dueDateDiv.append(dueDateLabel, dueDateInput);
 
     // Priority div
@@ -174,7 +175,7 @@ export function writeBackToDOM(event){
 
     options.forEach(opt => {
         const option = document.createElement("option");
-        let priority = storedArray[legendName][index].priority;
+        let priority = storedArray[projectTitle][index].priority;
         option.value = opt.value;
         option.textContent = opt.text;
         if (priority === opt.value) {option.selected = true}
@@ -191,7 +192,7 @@ export function writeBackToDOM(event){
     const notesInput = document.createElement("input");
     notesInput.classList.add("notes");
     notesInput.setAttribute("type", "text");
-    notesInput.setAttribute("value", storedArray[legendName][index].notes)
+    notesInput.setAttribute("value", storedArray[projectTitle][index].notes)
     notesDiv.append(notesLabel, notesInput);
 
     // Buttons
@@ -368,6 +369,7 @@ function populateLeftPanel(title) {
         // Task Div
         const taskButton = document.createElement("button");
         taskButton.id = "task";
+        taskButton.classList.add(legendName);
         taskButton.classList.add(title);
         taskButton.textContent = title;
 
@@ -395,6 +397,7 @@ function populateLeftPanel(title) {
         // Task Div
         const taskButton = document.createElement("button");
         taskButton.id = "task";
+        taskButton.classList.add(legendName);
         taskButton.classList.add(title);
         taskButton.textContent = title;
 
