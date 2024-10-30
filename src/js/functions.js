@@ -87,9 +87,6 @@ function resetValues(title, description, dueDate, priority, notes){
     priority = "";
     notes = "";
     todoArray = [];
-
-    console.log(legendName)
-    console.log(storedArray)
 }
 
 // Function to display to-do back to the DOM
@@ -99,7 +96,6 @@ export function writeBackToDOM(event){
     let buttonClasses = event.target.className.split(" ") 
     let projectTitle = buttonClasses[0];
     let taskTitle = buttonClasses[1];
-    console.log(projectTitle + taskTitle)
     let index = storedArray[projectTitle].findIndex(project => project.title === taskTitle);
 
     // Main Container
@@ -207,22 +203,27 @@ export function writeBackToDOM(event){
     delButton.classList.add("delete");
     delButton.textContent = "Delete";
 
-        // Append all elements
-        container.append(
-            titleDiv,
-            descDiv,
-            dueDateDiv,
-            priorityDiv,
-            notesDiv,
-            saveButton,
-            delButton,
-        );
-    
-        fieldset.appendChild(legend);
-        fieldset.appendChild(container);
-        form.appendChild(fieldset);
-    
-        rightContainer.appendChild(form);
+    // Remove all children
+    let rightPanel = document.querySelector(".right-panel")
+    let formExists = document.querySelector(".todo")
+    formExists && rightPanel.removeChild(formExists);
+
+    // Append all elements
+    container.append(
+        titleDiv,
+        descDiv,
+        dueDateDiv,
+        priorityDiv,
+        notesDiv,
+        saveButton,
+        delButton,
+    );
+
+    fieldset.appendChild(legend);
+    fieldset.appendChild(container);
+    form.appendChild(fieldset);
+
+    rightContainer.appendChild(form);
 }
 
 // Function to create modal
