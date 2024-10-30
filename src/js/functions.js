@@ -451,7 +451,7 @@ function EditJSON(event, title, description, dueDate, priority, notes) {
     storedArray[projectTitle][index].notes = notes;
 
     // Update the name of the task button as well
-    document.querySelector("#task").textContent = title;
+    document.querySelector(`#task.${projectTitle}[class*=" ${taskID}"]`).textContent = title;
 
 }
 
