@@ -18,7 +18,7 @@ export function addNewProjectTodo(event){
 
     let DOMElements = grabDOMElements(legendName);
 
-    populateLeftPanel(DOMElements.title);
+    populateLeftPanel(DOMElements.numberOfTodos, DOMElements.title);
 
     // Add new project if necessary and its new To-do list
 
@@ -356,7 +356,7 @@ export function createTodoDialog(event) {
     dialog.showModal();
 }
 
-function populateLeftPanel(title) {
+function populateLeftPanel(id, title) {
 
     let leftPanel = document.querySelector(".projects");
 
@@ -371,13 +371,13 @@ function populateLeftPanel(title) {
         const taskButton = document.createElement("button");
         taskButton.id = "task";
         taskButton.classList.add(legendName);
-        taskButton.classList.add(title);
+        taskButton.classList.add(id);
         taskButton.textContent = title;
 
         // Delete Task Button
         const XButton = document.createElement("button");
         XButton.id = "X";
-        XButton.classList.add(title);
+        XButton.classList.add(id);
         XButton.textContent = "X";
 
         //Append
@@ -399,13 +399,13 @@ function populateLeftPanel(title) {
         const taskButton = document.createElement("button");
         taskButton.id = "task";
         taskButton.classList.add(legendName);
-        taskButton.classList.add(title);
+        taskButton.classList.add(id);
         taskButton.textContent = title;
 
         // Delete Task Button
         const XButton = document.createElement("button");
         XButton.id = "X";
-        XButton.classList.add(title);
+        XButton.classList.add(id);
         XButton.textContent = "X";
 
         //Append
