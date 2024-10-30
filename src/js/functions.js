@@ -95,8 +95,8 @@ export function writeBackToDOM(event){
 
     let buttonClasses = event.target.className.split(" ") 
     let projectTitle = buttonClasses[0];
-    let taskTitle = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.title === taskTitle);
+    let taskID = Number(buttonClasses[1]);
+    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
 
     // Main Container
     const rightContainer = document.querySelector(".right-panel")
