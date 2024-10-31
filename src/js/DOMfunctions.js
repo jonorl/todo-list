@@ -157,8 +157,9 @@ export function writeBackToDOM(event){
 
     // Fieldset
     const fieldset = document.createElement("fieldset");
-    const legend = document.createElement("legend");
-    legend.textContent = projectTitle;
+    const legend = document.createElement("input");
+    legend.classList.add("projectTitle-input")
+    legend.setAttribute("value", projectTitle);
 
     // Container div
     const container = document.createElement("div")
@@ -304,15 +305,15 @@ export function XDelete(event){
     storedArray[projectTitle].splice(index, 1);
     localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
 
-    removeTaskDetails()
+    removeTaskDetails();
 }
 
 export function removeTaskDetails(){
 
-        // Remove main box with task details
-        let rightPanel = document.querySelector(".right-panel")
-        let formExists = document.querySelector(".todo")
-        formExists && rightPanel.removeChild(formExists);
+    // Remove main box with task details
+    let rightPanel = document.querySelector(".right-panel")
+    let formExists = document.querySelector(".todo")
+    formExists && rightPanel.removeChild(formExists);
 }
 
 // Function to create the left panel with the projects and tasks from scratch
@@ -362,7 +363,7 @@ export function populateLeftPanel() {
             projectDiv.appendChild(taskButton);
             projectDiv.appendChild(XButton);
             projectsDiv.appendChild(projectDiv);
-            })
+        })
     }
 }
 

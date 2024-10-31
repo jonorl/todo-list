@@ -16,7 +16,7 @@ export function addNewProjectTodo(event){
 
     // Grab DOM variables
 
-    let DOMElements = grabDOMElements(legendName);
+    let DOMElements = grabDOMElements();
 
     // Add new project if necessary and its new To-do list
 
@@ -25,8 +25,7 @@ export function addNewProjectTodo(event){
         DOMElements.description, 
         DOMElements.dueDate, 
         DOMElements.priority, 
-        DOMElements.notes, 
-        legendName
+        DOMElements.notes
         );
 
     populateLeftPanel();
@@ -89,13 +88,11 @@ function resetValues(title, description, dueDate, priority, notes){
 
 export function saveChanges(event){
 
-    let buttonClasses = event.target.className.split(" ");
-    let projectTitle = buttonClasses[0];
-
-    let DOMElementsTask = grabDOMElementsTask(projectTitle);
+    let DOMElementsTask = grabDOMElementsTask();
 
     EditJSON(
         event,
+        DOMElementsTask.projectTitleName,
         DOMElementsTask.title, 
         DOMElementsTask.description, 
         DOMElementsTask.dueDate, 
@@ -107,8 +104,9 @@ export function saveChanges(event){
     removeTaskDetails()
 }
 
-function grabDOMElementsTask(projectTitle) {
+function grabDOMElementsTask() {
 
+    let projectTitleName = document.querySelector(".projectTitle-input").value
     let title = document.querySelector(".title-input").value;
     let description = document.querySelector(".description-input").value
     let dueDate = document.querySelector(".dueDate-input").value
@@ -116,11 +114,11 @@ function grabDOMElementsTask(projectTitle) {
     let notes = document.querySelector(".notes-input").value
     let checkbox = document.querySelector(".checkbox-input").checked
 
-    return {title, description, dueDate, priority, notes, checkbox }
+    return {projectTitleName, title, description, dueDate, priority, notes, checkbox }
 };
 
 
-function EditJSON(event, title, description, dueDate, priority, notes, checkbox) {
+function EditJSON(event, projectTitleName, title, description, dueDate, priority, notes, checkbox) {
 
     let buttonClasses = event.target.className.split(" ")
     let projectTitle = buttonClasses[0];
@@ -135,9 +133,23 @@ function EditJSON(event, title, description, dueDate, priority, notes, checkbox)
     storedArray[projectTitle][index].notes = notes;
     storedArray[projectTitle][index].checkbox = checkbox;
 
+    // Update the name of the task button and their class names as well
+    let taskButton = document.querySelector(`#task.${projectTitle}[class*=" ${taskID}"]`);
+    let XButton = document.querySelector(`#X.${projectTitle}[class*=" ${taskID}"]`);
+    taskButton.textContent = title;
+    taskButton.className = ""
+    taskButton.classList.add(projectTitleName);
+    taskButton.classList.add(taskID);
+    XButton.className = ""
+    XButton.classList.add(projectTitleName);
+    XButton.classList.add(taskID);
+
+    delete Object.assign(storedArray, {[projectTitleName]: storedArray[projectTitle] })[projectTitle];
+    delete Object.assign(projects, {[projectTitleName]: projects[projectTitle] })[projectTitle];
+    projectTitle = projectTitleName;
+
     localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
-    // Update the name of the task button as well
-    document.querySelector(`#task.${projectTitle}[class*=" ${taskID}"]`).textContent = title;
+    populateLeftPanel();
 }
