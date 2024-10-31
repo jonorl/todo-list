@@ -18,8 +18,6 @@ export function addNewProjectTodo(event){
 
     let DOMElements = grabDOMElements(legendName);
 
-    populateLeftPanel(DOMElements.numberOfTodos, DOMElements.title);
-
     // Add new project if necessary and its new To-do list
 
     addTodoToJSON(
@@ -31,6 +29,8 @@ export function addNewProjectTodo(event){
         DOMElements.notes, 
         legendName
         );
+
+    newPopulateLeftPanel();
 
     // Return the values inside the dialog to blank
 
@@ -469,24 +469,31 @@ function grabDOMElementsTask(projectTitle) {
     return {title, description, dueDate, priority, notes, numberOfTodos }
 };
 
-function newPopulateLeftPanel(/* event */) {
-    // let buttonClasses = event.target.className.split(" ");
-    // let projectTitle = buttonClasses[0];
-    // let todoIndex = buttonClasses[1];
+function newPopulateLeftPanel() {
 
     // Reset the left panel
-    let leftPanelExists = document.querySelector(".left-panel")
-    let projectDivExists = document.querySelector(".projects")
-    projectDivExists && leftPanelExists.removeChild(projectDivExists);
+    let projectsDiv = document.querySelector(".projects");
 
-    project.forEach(project => {
-        let leftPanel = document.querySelector(".projects");
+    if (projectsDiv) {
+      while (projectsDiv.firstChild) {
+        projectsDiv.removeChild(projectsDiv.firstChild);
+      }
+    }
+
+    // Re-write the Projects title
+
+    const projectDivTitle = document.createElement("div");
+    projectDivTitle.classList.add("projects-title");
+    projectDivTitle.textContent = "Projects";
+    projectsDiv.appendChild(projectDivTitle)
+
+    // Loop through each object project in storedArray and each of its todo's
+
+    for (let project in storedArray){
         const projectDiv = document.createElement("div");
         projectDiv.classList.add(project);
         projectDiv.textContent = project;
-        project.forEach(todo => {
-
-
+        storedArray[project].forEach(todo =>{
             // Task Div
             const taskButton = document.createElement("button");
             taskButton.id = "task";
@@ -504,10 +511,8 @@ function newPopulateLeftPanel(/* event */) {
             //Append
             projectDiv.appendChild(taskButton);
             projectDiv.appendChild(XButton);
-        })
-
-        leftPanel.appendChild(projectDiv);
-    })
-
+            projectsDiv.appendChild(projectDiv);
+            })
+    }
 }
 
