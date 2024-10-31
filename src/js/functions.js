@@ -196,7 +196,7 @@ export function writeBackToDOM(event){
     checkboxDiv.classList.add("checkbox-div");
     const checkboxLabel = document.createElement("label");
     checkboxLabel.setAttribute("for", "checkbox");
-    checkboxLabel.textContent = "Checkbox\u00A0";
+    checkboxLabel.textContent = "Done?\u00A0";
     const checkbox = document.createElement("input");
     checkbox.classList.add("checkbox-input");
     checkbox.setAttribute("type", "checkbox");
