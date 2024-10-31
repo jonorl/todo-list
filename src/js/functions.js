@@ -191,6 +191,18 @@ export function writeBackToDOM(event){
     notesInput.setAttribute("value", storedArray[projectTitle][index].notes)
     notesDiv.append(notesLabel, notesInput);
 
+    // Checklist
+    const checkboxDiv = document.createElement("div");
+    checkboxDiv.classList.add("checkbox-div");
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.setAttribute("for", "checkbox");
+    checkboxLabel.textContent = "Checkbox\u00A0";
+    const checkbox = document.createElement("input");
+    checkbox.classList.add("checkbox-input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.checked = storedArray[projectTitle][index].checkbox;
+    checkboxDiv.append(checkboxLabel, checkbox);
+
     // Buttons
 
     const saveButton = document.createElement("button");
@@ -217,6 +229,7 @@ export function writeBackToDOM(event){
         dueDateDiv,
         priorityDiv,
         notesDiv,
+        checkboxDiv,
         saveButton,
         delButton,
     );
@@ -391,12 +404,26 @@ export function saveChanges(event){
         DOMElementsTask.description, 
         DOMElementsTask.dueDate, 
         DOMElementsTask.priority, 
-        DOMElementsTask.notes
+        DOMElementsTask.notes,
+        DOMElementsTask.checkbox,
         );
 }
 
-function EditJSON(event, title, description, dueDate, priority, notes) {
+function grabDOMElementsTask(projectTitle) {
 
+    let title = document.querySelector(".title-input").value;
+    let description = document.querySelector(".description-input").value
+    let dueDate = document.querySelector(".dueDate-input").value
+    let priority = document.querySelector(".priority-input").value
+    let notes = document.querySelector(".notes-input").value
+    let checkbox = document.querySelector(".checkbox-input").checked
+
+    console.table(storedArray);
+
+    return {title, description, dueDate, priority, notes, checkbox }
+};
+
+function EditJSON(event, title, description, dueDate, priority, notes, checkbox) {
 
     let buttonClasses = event.target.className.split(" ")
     let projectTitle = buttonClasses[0];
@@ -409,25 +436,14 @@ function EditJSON(event, title, description, dueDate, priority, notes) {
     storedArray[projectTitle][index].dueDate = dueDate;
     storedArray[projectTitle][index].priority = priority;
     storedArray[projectTitle][index].notes = notes;
+    storedArray[projectTitle][index].checkbox = checkbox;
+
+    localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
+    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     // Update the name of the task button as well
     document.querySelector(`#task.${projectTitle}[class*=" ${taskID}"]`).textContent = title;
-
 }
-
-function grabDOMElementsTask(projectTitle) {
-
-    let title = document.querySelector(".title-input").value;
-    let description = document.querySelector(".description-input").value
-    let dueDate = document.querySelector(".dueDate-input").value
-    let priority = document.querySelector(".priority-input").value
-    let notes = document.querySelector(".notes-input").value
-    let numberOfTodos = (projectTitle in storedArray) ? storedArray[projectTitle].length : 0;
-
-    console.table(storedArray);
-
-    return {title, description, dueDate, priority, notes, numberOfTodos }
-};
 
 function populateLeftPanel() {
 
