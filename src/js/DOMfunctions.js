@@ -29,7 +29,7 @@ export function createTodoDialog(event) {
 
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legendName = document.querySelector(".projectName").value // Adds project name to legendName variable
+    legendName = document.querySelector(".projectName").value.replace(/[^a-zA-Z0-9-_]/g, ''); // Adds project name to legendName variable
     legend.textContent = legendName;
 
     const container = document.createElement("div");
@@ -301,6 +301,7 @@ export function XDelete(event){
     let buttons = document.querySelectorAll(`.${projectTitle}[class*=" ${taskID}"]`);
     buttons.forEach(button => button.remove());
 
+    // I need to modify both projects and storedArray
     projects[projectTitle].splice(index, 1);
     storedArray[projectTitle].splice(index, 1);
     localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));

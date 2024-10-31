@@ -106,7 +106,7 @@ export function saveChanges(event){
 
 function grabDOMElementsTask() {
 
-    let projectTitleName = document.querySelector(".projectTitle-input").value
+    let projectTitleName = document.querySelector(".projectTitle-input").value.replace(/[^a-zA-Z0-9-_]/g, '');
     let title = document.querySelector(".title-input").value;
     let description = document.querySelector(".description-input").value
     let dueDate = document.querySelector(".dueDate-input").value
@@ -124,6 +124,14 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
     let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
+
+    // Update values of projects Object
+    projects[projectTitle][index].title = title;
+    projects[projectTitle][index].description = description;
+    projects[projectTitle][index].dueDate = dueDate;
+    projects[projectTitle][index].priority = priority;
+    projects[projectTitle][index].notes = notes;
+    projects[projectTitle][index].checkbox = checkbox;
 
     // Update values of stored JSON
     storedArray[projectTitle][index].title = title;
@@ -144,8 +152,6 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     XButton.classList.add(projectTitleName);
     XButton.classList.add(taskID);
 
-    delete Object.assign(storedArray, {[projectTitleName]: storedArray[projectTitle] })[projectTitle];
-    delete Object.assign(projects, {[projectTitleName]: projects[projectTitle] })[projectTitle];
     projectTitle = projectTitleName;
 
     localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
