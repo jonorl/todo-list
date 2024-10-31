@@ -1,6 +1,6 @@
 // Module import
 
-import { storedArray } from "./auxFunctions.js";
+import { storedArray, manipulateCSS } from "./auxFunctions.js";
 
 // Global variables
 
@@ -288,6 +288,21 @@ export function writeBackToDOM(event){
     form.appendChild(fieldset);
 
     rightContainer.appendChild(form);
+
+    switch (storedArray[projectTitle][index].priority){
+        case "Low": 
+            fieldset.style.backgroundColor  = "blue";
+            fieldset.style.color  = "aliceblue";
+            break;
+        case "Medium": 
+            fieldset.style.backgroundColor  = "yellow";
+            fieldset.style.color  = "black";
+            break;
+        case "High": 
+            fieldset.style.backgroundColor  = "red";
+            fieldset.style.color  = "black";
+            break;
+        }
 }
 
 // Function to delete task from storage
@@ -351,6 +366,20 @@ export function populateLeftPanel() {
             taskButton.id = "task";
             taskButton.classList.add(project);
             taskButton.classList.add(todo.id);
+            switch (todo.priority){
+                case "Low": 
+                    taskButton.style.backgroundColor  = "blue";
+                    taskButton.style.color  = "aliceblue";
+                    break;
+                case "Medium": 
+                    taskButton.style.backgroundColor  = "yellow";
+                    taskButton.style.color  = "black";
+                    break;
+                case "High": 
+                    taskButton.style.backgroundColor  = "red";
+                    taskButton.style.color  = "black";
+                    break;
+                }
             taskButton.textContent = todo.title;
         
             // Delete Task Button
@@ -358,6 +387,20 @@ export function populateLeftPanel() {
             XButton.id = "X";
             XButton.classList.add(project);
             XButton.classList.add(todo.id);
+            switch (todo.priority){
+                case "Low": 
+                    XButton.style.backgroundColor  = "blue";
+                    XButton.style.color  = "aliceblue";
+                    break;
+                case "Medium": 
+                    XButton.style.backgroundColor  = "yellow";
+                    XButton.style.color  = "black";
+                    break;
+                case "High": 
+                    XButton.style.backgroundColor  = "red";
+                    XButton.style.color  = "black";
+                    break;
+                }
             XButton.textContent = "X";
         
             //Append

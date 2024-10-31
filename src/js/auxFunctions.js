@@ -13,6 +13,7 @@ export let storedArray; // This is the JSON saved in local storage
 export function addNewProjectTodo(event){
 
     event.preventDefault();
+    let idForCSS;
 
     // Grab DOM variables
 
@@ -25,10 +26,8 @@ export function addNewProjectTodo(event){
         DOMElements.description, 
         DOMElements.dueDate, 
         DOMElements.priority, 
-        DOMElements.notes
+        DOMElements.notes,
         );
-
-    populateLeftPanel();
 
     // Return the values inside the dialog to blank
 
@@ -75,6 +74,9 @@ function addTodoToJSON(title, description, dueDate, priority, notes) {
     // Adds Project/todo to localstorage as JSON
     localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+
+    populateLeftPanel();
+    manipulateCSSModal(newID);
 }
 
 function resetValues(title, description, dueDate, priority, notes){
@@ -158,4 +160,53 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     populateLeftPanel();
+    manipulateCSS(event);
+}
+
+export function manipulateCSS(event) {
+    let buttonClasses = event.target.className.split(" ")
+    let projectTitle = buttonClasses[0];
+    let taskID = buttonClasses[1];
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
+    buttons.forEach(btn => {
+        switch (storedArray[projectTitle][index].priority){
+            case "Low": 
+                btn.style.backgroundColor  = "blue";
+                btn.style.color  = "aliceblue";
+                break;
+            case "Medium": 
+                btn.style.backgroundColor  = "yellow";
+                btn.style.color  = "black";
+                break;
+            case "High": 
+                btn.style.backgroundColor  = "red";
+                btn.style.color  = "black";
+                break;
+            }
+    })
+}
+
+function manipulateCSSModal(newID) {
+    let projectTitle = legendName;
+    let taskID = newID;
+
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`);
+    buttons.forEach(btn => {
+        switch (storedArray[projectTitle][index].priority){
+            case "Low": 
+                btn.style.backgroundColor  = "blue";
+                btn.style.color  = "aliceblue";
+                break;
+            case "Medium": 
+                btn.style.backgroundColor  = "yellow";
+                btn.style.color  = "black";
+                break;
+            case "High": 
+                btn.style.backgroundColor  = "red";
+                btn.style.color  = "black";
+                break;
+            }
+    })
 }
