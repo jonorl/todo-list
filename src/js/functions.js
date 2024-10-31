@@ -468,3 +468,46 @@ function grabDOMElementsTask(projectTitle) {
 
     return {title, description, dueDate, priority, notes, numberOfTodos }
 };
+
+function newPopulateLeftPanel(/* event */) {
+    // let buttonClasses = event.target.className.split(" ");
+    // let projectTitle = buttonClasses[0];
+    // let todoIndex = buttonClasses[1];
+
+    // Reset the left panel
+    let leftPanelExists = document.querySelector(".left-panel")
+    let projectDivExists = document.querySelector(".projects")
+    projectDivExists && leftPanelExists.removeChild(projectDivExists);
+
+    project.forEach(project => {
+        let leftPanel = document.querySelector(".projects");
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add(project);
+        projectDiv.textContent = project;
+        project.forEach(todo => {
+
+
+            // Task Div
+            const taskButton = document.createElement("button");
+            taskButton.id = "task";
+            taskButton.classList.add(project);
+            taskButton.classList.add(todo.id);
+            taskButton.textContent = todo.title;
+        
+            // Delete Task Button
+            const XButton = document.createElement("button");
+            XButton.id = "X";
+            XButton.classList.add(project);
+            XButton.classList.add(todo.id);
+            XButton.textContent = "X";
+        
+            //Append
+            projectDiv.appendChild(taskButton);
+            projectDiv.appendChild(XButton);
+        })
+
+        leftPanel.appendChild(projectDiv);
+    })
+
+}
+
