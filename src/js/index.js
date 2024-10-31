@@ -1,7 +1,8 @@
 // Module import
 
 import "../css/style.css";
-import {addNewProjectTodo, createTodoDialog, writeBackToDOM, XDelete, saveChanges, dialog} from "./functions"
+import {createTodoDialog, writeBackToDOM, XDelete, dialog} from "./DOMfunctions"
+import {addNewProjectTodo, saveChanges} from "./auxFunctions"
 
 // Event Listeners
 const btns = document.querySelectorAll("button");
