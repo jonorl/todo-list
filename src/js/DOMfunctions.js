@@ -1,6 +1,6 @@
 // Module import
 
-import { storedArray } from "./auxFunctions";
+import { storedArray } from "./auxFunctions.js";
 
 // Global variables
 

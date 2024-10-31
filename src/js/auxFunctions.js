@@ -51,9 +51,8 @@ function grabDOMElements() {
     let dueDate = document.querySelector(".dueDate").value
     let priority = document.querySelector(".priority").value
     let notes = document.querySelector(".notes").value
-    let numberOfTodos = (legendName in projects) ? projects[legendName].length : 0;
 
-    return {title, description, dueDate, priority, notes, numberOfTodos }
+    return {title, description, dueDate, priority, notes}
 };
 
 function addTodoToJSON(title, description, dueDate, priority, notes) {
@@ -77,8 +76,6 @@ function addTodoToJSON(title, description, dueDate, priority, notes) {
     // Adds Project/todo to localstorage as JSON
     localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
-
-    console.table(storedArray);
 }
 
 function resetValues(title, description, dueDate, priority, notes){
@@ -116,8 +113,6 @@ function grabDOMElementsTask(projectTitle) {
     let priority = document.querySelector(".priority-input").value
     let notes = document.querySelector(".notes-input").value
     let checkbox = document.querySelector(".checkbox-input").checked
-
-    console.table(storedArray);
 
     return {title, description, dueDate, priority, notes, checkbox }
 };
