@@ -32,6 +32,7 @@ document.body.addEventListener("click", (event) => {
             break;
         
         case "X":
+        case "delete" :
             event.preventDefault();
             XDelete(event);
             break;

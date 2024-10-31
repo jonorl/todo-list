@@ -30,7 +30,7 @@ export function addNewProjectTodo(event){
         legendName
         );
 
-    newPopulateLeftPanel();
+    populateLeftPanel();
 
     // Return the values inside the dialog to blank
 
@@ -358,53 +358,6 @@ export function createTodoDialog(event) {
     dialog.showModal();
 }
 
-function populateLeftPanel(id, title) {
-
-    // If the project exists add new task
-
-    if (legendName in projects){
-
-        // Select the right project name
-        const projectDiv = document.querySelector("." + legendName);
-        populateTaskDOM(id, title, projectDiv)
-    }
-
-    // If project doesn't exist, add it and the new task
-
-    else {
-        // Project Div
-        const projectDiv = document.createElement("div");
-        projectDiv.classList.add(legendName);
-        projectDiv.textContent = legendName;
-        populateTaskDOM(id, title, projectDiv)
-    }
-}
-
-function populateTaskDOM(id, title, projectDiv){
-
-    let leftPanel = document.querySelector(".projects");
-
-    // Task Div
-    const taskButton = document.createElement("button");
-    taskButton.id = "task";
-    taskButton.classList.add(legendName);
-    taskButton.classList.add(id);
-    taskButton.textContent = title;
-
-    // Delete Task Button
-    const XButton = document.createElement("button");
-    XButton.id = "X";
-    XButton.classList.add(legendName);
-    XButton.classList.add(id);
-    XButton.textContent = "X";
-
-    //Append
-    leftPanel.appendChild(projectDiv);
-    projectDiv.appendChild(taskButton);
-    projectDiv.appendChild(XButton);
-
-}
-
 export function XDelete(event){
     
     let buttonClasses = event.target.className.split(" ");
@@ -415,7 +368,11 @@ export function XDelete(event){
     buttons.forEach(button => button.remove());
 
     storedArray[projectTitle].splice(index, 1);
-    console.table(storedArray);
+
+    // Remove all children
+    let rightPanel = document.querySelector(".right-panel")
+    let formExists = document.querySelector(".todo")
+    formExists && rightPanel.removeChild(formExists);
 }
 
 export function saveChanges(event){
@@ -469,7 +426,7 @@ function grabDOMElementsTask(projectTitle) {
     return {title, description, dueDate, priority, notes, numberOfTodos }
 };
 
-function newPopulateLeftPanel() {
+function populateLeftPanel() {
 
     // Reset the left panel
     let projectsDiv = document.querySelector(".projects");
@@ -490,10 +447,12 @@ function newPopulateLeftPanel() {
     // Loop through each object project in storedArray and each of its todo's
 
     for (let project in storedArray){
+
         const projectDiv = document.createElement("div");
         projectDiv.classList.add(project);
         projectDiv.textContent = project;
         storedArray[project].forEach(todo =>{
+
             // Task Div
             const taskButton = document.createElement("button");
             taskButton.id = "task";
