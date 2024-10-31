@@ -319,7 +319,7 @@ export function XDelete(event){
     // I need to modify both projects and storedArray
     projects[projectTitle].splice(index, 1);
     storedArray[projectTitle].splice(index, 1);
-    localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
+    localStorage.setItem("todoArrayJSON", JSON.stringify(storedArray));
 
     removeTaskDetails();
 }
