@@ -304,10 +304,15 @@ export function XDelete(event){
     storedArray[projectTitle].splice(index, 1);
     localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
 
-    // Remove all children
-    let rightPanel = document.querySelector(".right-panel")
-    let formExists = document.querySelector(".todo")
-    formExists && rightPanel.removeChild(formExists);
+    removeTaskDetails()
+}
+
+export function removeTaskDetails(){
+
+        // Remove main box with task details
+        let rightPanel = document.querySelector(".right-panel")
+        let formExists = document.querySelector(".todo")
+        formExists && rightPanel.removeChild(formExists);
 }
 
 // Function to create the left panel with the projects and tasks from scratch

@@ -1,7 +1,7 @@
 // Module import
 
 import {todo} from "./constructors.js"
-import {populateLeftPanel, legendName, projects, dialog} from "./DOMfunctions.js"
+import {populateLeftPanel, legendName, projects, removeTaskDetails, dialog} from "./DOMfunctions.js"
 
 // Global variables
 
@@ -103,6 +103,8 @@ export function saveChanges(event){
         DOMElementsTask.notes,
         DOMElementsTask.checkbox,
         );
+
+    removeTaskDetails()
 }
 
 function grabDOMElementsTask(projectTitle) {
