@@ -21,7 +21,6 @@ export function addNewProjectTodo(event){
     // Add new project if necessary and its new To-do list
 
     addTodoToJSON(
-        DOMElements.numberOfTodos, 
         DOMElements.title, 
         DOMElements.description, 
         DOMElements.dueDate, 
@@ -35,7 +34,6 @@ export function addNewProjectTodo(event){
     // Return the values inside the dialog to blank
 
     resetValues(
-        DOMElements.numberOfTodos, 
         DOMElements.title, 
         DOMElements.description, 
         DOMElements.dueDate, 
@@ -58,10 +56,12 @@ function grabDOMElements() {
     return {title, description, dueDate, priority, notes, numberOfTodos }
 };
 
-function addTodoToJSON(id, title, description, dueDate, priority, notes) {
+function addTodoToJSON(title, description, dueDate, priority, notes) {
+
+    let newID = `${Date.now()}`;
     
     // Add new Todo list to array
-    let newTodo = new todo(id, title, description, dueDate, priority, notes);
+    let newTodo = new todo(newID, title, description, dueDate, priority, notes);
     todoArray.push(newTodo);
 
     // Check if project exists in projects object and adds it if not
@@ -78,7 +78,6 @@ function addTodoToJSON(id, title, description, dueDate, priority, notes) {
     localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
-    todoArray = [];
     console.table(storedArray);
 }
 
@@ -88,6 +87,7 @@ function resetValues(title, description, dueDate, priority, notes){
     dueDate = "";
     priority = "";
     notes = "";
+    todoArray = [];
 }
 
 // Function to display to-do back to the DOM
@@ -97,7 +97,7 @@ export function writeBackToDOM(event){
     let buttonClasses = event.target.className.split(" ") 
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.id === Number(taskID));
+    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
 
     // Main Container
     const rightContainer = document.querySelector(".right-panel")
@@ -363,11 +363,14 @@ export function XDelete(event){
     let buttonClasses = event.target.className.split(" ");
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.id === Number(taskID));
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`.${projectTitle}[class*=" ${taskID}"]`);
     buttons.forEach(button => button.remove());
 
+    projects[projectTitle].splice(index, 1);
     storedArray[projectTitle].splice(index, 1);
+    localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
+    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     // Remove all children
     let rightPanel = document.querySelector(".right-panel")
@@ -398,7 +401,7 @@ function EditJSON(event, title, description, dueDate, priority, notes) {
     let buttonClasses = event.target.className.split(" ")
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.id === Number(taskID));
+    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
 
     // Update values of stored JSON
     storedArray[projectTitle][index].title = title;
@@ -419,7 +422,7 @@ function grabDOMElementsTask(projectTitle) {
     let dueDate = document.querySelector(".dueDate-input").value
     let priority = document.querySelector(".priority-input").value
     let notes = document.querySelector(".notes-input").value
-    let numberOfTodos = (projectTitle in projects) ? projects[projectTitle].length : 0;
+    let numberOfTodos = (projectTitle in storedArray) ? storedArray[projectTitle].length : 0;
 
     console.table(storedArray);
 
