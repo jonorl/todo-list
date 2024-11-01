@@ -394,6 +394,7 @@ export function populateLeftPanel() {
         projectDiv.classList.add(project);
         const projectDivText = document.createElement("div");
         projectDivText.classList.add("text");
+        projectDivText.classList.add(project);
         projectDivText.textContent = project;
         projectDiv.append(projectDivText);
         storedArray[project].forEach(todo =>{
@@ -450,10 +451,13 @@ export function populateLeftPanel() {
 }
 
 export function manipulateCSS(event) {
+
+
     let buttonClasses = event.target.className.split(" ")
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+
+    let index = parseInt(projects[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
     buttons.forEach(btn => {
         switch (storedArray[projectTitle][index].priority){

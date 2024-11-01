@@ -1,7 +1,7 @@
 // Module import
 
 import {todo} from "./constructors.js"
-import {populateLeftPanel, legendName, projects, removeTaskDetails, manipulateCSS, manipulateCSSModal, dialog} from "./DOMfunctions.js"
+import {populateLeftPanel, legendName, projects, removeTaskDetails, manipulateCSSModal, manipulateCSS, dialog} from "./DOMfunctions.js"
 
 // Global variables
 
@@ -154,12 +154,30 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     XButton.classList.add(projectTitleName);
     XButton.classList.add(taskID);
 
-    projectTitle = projectTitleName;
+    // Replace name references if different
+    if (projectTitle !== projectTitleName){
 
-    localStorage.setItem('todoArrayJSON', JSON.stringify(storedArray));
+    projects[projectTitleName] = projects[projectTitle]
+    delete projects[projectTitle];
+    projectTitle = projectTitleName;
+    projects[projectTitle] = projects[projectTitleName]
+
+    localStorage.setItem('todoArrayJSON', JSON.stringify(projects));
     storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     populateLeftPanel();
-    manipulateCSS(event);
-}
 
+    let eventWithUpdatedClasses = {
+        target: {
+            className: `${projectTitleName} ${taskID}`
+            }
+        };
+    manipulateCSS(eventWithUpdatedClasses);
+    
+    }
+
+    else {
+        populateLeftPanel();
+        manipulateCSS(event);
+    }
+}
