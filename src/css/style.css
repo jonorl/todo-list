@@ -43,17 +43,14 @@ label {
   align-self: baseline;
 }
 
-.projects > [class^="Project"] {
+.projects > :not(:first-child) {
   display: grid;
   grid-template-columns: 4fr 1fr;
   text-align: center;
 }
-
-[class^="Project"] > :first-child {
+.projects > :not(:first-child) > :first-child {
   grid-column: span 2;
 }
-
-
 
 .todoContainer, .todo {
   display: grid;
