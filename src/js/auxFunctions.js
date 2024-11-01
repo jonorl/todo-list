@@ -1,7 +1,7 @@
 // Module import
 
 import {todo} from "./constructors.js"
-import {populateLeftPanel, legendName, projects, removeTaskDetails, dialog} from "./DOMfunctions.js"
+import {populateLeftPanel, legendName, projects, removeTaskDetails, manipulateCSS, manipulateCSSModal, dialog} from "./DOMfunctions.js"
 
 // Global variables
 
@@ -163,50 +163,3 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     manipulateCSS(event);
 }
 
-export function manipulateCSS(event) {
-    let buttonClasses = event.target.className.split(" ")
-    let projectTitle = buttonClasses[0];
-    let taskID = buttonClasses[1];
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
-    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
-    buttons.forEach(btn => {
-        switch (storedArray[projectTitle][index].priority){
-            case "Low": 
-                btn.style.backgroundColor  = "blue";
-                btn.style.color  = "aliceblue";
-                break;
-            case "Medium": 
-                btn.style.backgroundColor  = "yellow";
-                btn.style.color  = "black";
-                break;
-            case "High": 
-                btn.style.backgroundColor  = "red";
-                btn.style.color  = "black";
-                break;
-            }
-    })
-}
-
-function manipulateCSSModal(newID) {
-    let projectTitle = legendName;
-    let taskID = newID;
-
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
-    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`);
-    buttons.forEach(btn => {
-        switch (storedArray[projectTitle][index].priority){
-            case "Low": 
-                btn.style.backgroundColor  = "blue";
-                btn.style.color  = "aliceblue";
-                break;
-            case "Medium": 
-                btn.style.backgroundColor  = "yellow";
-                btn.style.color  = "black";
-                break;
-            case "High": 
-                btn.style.backgroundColor  = "red";
-                btn.style.color  = "black";
-                break;
-            }
-    })
-}

@@ -1,6 +1,6 @@
 // Module import
 
-import { storedArray, manipulateCSS } from "./auxFunctions.js";
+import { storedArray } from "./auxFunctions.js";
 
 // Global variables
 
@@ -55,6 +55,7 @@ export function createTodoDialog(event) {
     const descInput = document.createElement("input");
     descInput.classList.add("description");
     descInput.setAttribute("type", "text");
+    descInput.style.height="4vh";
     descDiv.append(descLabel, descInput);
 
     // Due Date div
@@ -103,17 +104,20 @@ export function createTodoDialog(event) {
     const notesInput = document.createElement("input");
     notesInput.classList.add("notes");
     notesInput.setAttribute("type", "text");
+    notesInput.style.height="4vh";
     notesDiv.append(notesLabel, notesInput);
 
     // Buttons
     const addButton = document.createElement("button");
     addButton.id = "add";
     addButton.classList.add("add");
+    addButton.style.borderRadius="8px"
     addButton.textContent = "Add";
 
     const cancelButton = document.createElement("button");
     cancelButton.classList.add("cancel");
     cancelButton.id = "cancel";
+    cancelButton.style.borderRadius="8px"
     cancelButton.textContent = "Cancel";
     cancelButton.setAttribute("type", "button");
 
@@ -291,15 +295,15 @@ export function writeBackToDOM(event){
 
     switch (storedArray[projectTitle][index].priority){
         case "Low": 
-            fieldset.style.backgroundColor  = "blue";
+            fieldset.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
             fieldset.style.color  = "aliceblue";
             break;
         case "Medium": 
-            fieldset.style.backgroundColor  = "yellow";
+            fieldset.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
             fieldset.style.color  = "black";
             break;
         case "High": 
-            fieldset.style.backgroundColor  = "red";
+            fieldset.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
             fieldset.style.color  = "black";
             break;
         }
@@ -368,15 +372,15 @@ export function populateLeftPanel() {
             taskButton.classList.add(todo.id);
             switch (todo.priority){
                 case "Low": 
-                    taskButton.style.backgroundColor  = "blue";
+                    taskButton.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
                     taskButton.style.color  = "aliceblue";
                     break;
                 case "Medium": 
-                    taskButton.style.backgroundColor  = "yellow";
+                    taskButton.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
                     taskButton.style.color  = "black";
                     break;
                 case "High": 
-                    taskButton.style.backgroundColor  = "red";
+                    taskButton.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
                     taskButton.style.color  = "black";
                     break;
                 }
@@ -389,15 +393,15 @@ export function populateLeftPanel() {
             XButton.classList.add(todo.id);
             switch (todo.priority){
                 case "Low": 
-                    XButton.style.backgroundColor  = "blue";
+                    XButton.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
                     XButton.style.color  = "aliceblue";
                     break;
                 case "Medium": 
-                    XButton.style.backgroundColor  = "yellow";
+                    XButton.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
                     XButton.style.color  = "black";
                     break;
                 case "High": 
-                    XButton.style.backgroundColor  = "red";
+                    XButton.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
                     XButton.style.color  = "black";
                     break;
                 }
@@ -411,3 +415,50 @@ export function populateLeftPanel() {
     }
 }
 
+export function manipulateCSS(event) {
+    let buttonClasses = event.target.className.split(" ")
+    let projectTitle = buttonClasses[0];
+    let taskID = buttonClasses[1];
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
+    buttons.forEach(btn => {
+        switch (storedArray[projectTitle][index].priority){
+            case "Low": 
+                btn.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
+                btn.style.color  = "aliceblue";
+                break;
+            case "Medium": 
+                btn.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
+                btn.style.color  = "black";
+                break;
+            case "High": 
+                btn.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
+                btn.style.color  = "black";
+                break;
+            }
+    })
+}
+
+export function manipulateCSSModal(newID) {
+    let projectTitle = legendName;
+    let taskID = newID;
+
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`);
+    buttons.forEach(btn => {
+        switch (storedArray[projectTitle][index].priority){
+            case "Low": 
+                btn.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
+                btn.style.color  = "aliceblue";
+                break;
+            case "Medium": 
+                btn.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
+                btn.style.color  = "black";
+                break;
+            case "High": 
+                btn.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
+                btn.style.color  = "black";
+                break;
+            }
+    })
+}
