@@ -424,6 +424,8 @@ export function populateLeftPanel() {
             XButton.id = "X";
             XButton.classList.add(project);
             XButton.classList.add(todo.id);
+            XButton.classList.add("fa")
+            XButton.classList.add("fa-trash")
             switch (todo.priority){
                 case "Low": 
                     XButton.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
@@ -438,7 +440,6 @@ export function populateLeftPanel() {
                     XButton.style.color  = "black";
                     break;
                 }
-            XButton.textContent = "X";
         
             //Append
             projectDiv.appendChild(taskButton);
