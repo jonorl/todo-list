@@ -3,16 +3,80 @@
 * {
   background-color: black;
   color: aliceblue;
+  font-size: large;
+  font-family: "Roboto"
+}
+
+input {
+  border-radius: 8px;
+}
+
+label { 
+  background-color: transparent !important; 
+}
+
+.projectTitle-input {
+  margin-bottom: 4vh;
+}
+
+.title-div, .description-div, .dueDate-div, .priority-div, .notes-div, .checkbox-div {
+  width: fit-content;
+  background-color: transparent !important; 
+  /* color: black !important; */
 }
 
 .main-container {
   display: grid;
   grid-template-columns: 1fr 4fr;
+  gap: 10vh;
   height: 100vh;
+}
+
+.projects-title {
+  font-size: 6vh;
+  font-weight: 600;
+}
+
+.projects {
+  display: grid;
+  gap: 4vh;
+  align-self: baseline;
+}
+
+.projects > [class^="Project"] {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  text-align: center;
+}
+
+[class^="Project"] > :first-child {
+  grid-column: span 2;
+}
+
+
+
+.todoContainer, .todo {
+  display: grid;
+  gap: 2vh;
+  width: fit-content;
+}
+
+.todo {
+  margin-top: 4vh;
+}
+
+fieldset > legend {
+  margin-top: 2vh;
+  font-size: 4.5vh !important;
+}
+
+button#modal{
+  border-radius: 8px;
 }
 
 .main-fieldset {
   height: fit-content;
+  display: grid;
 }
 
 .left-panel {

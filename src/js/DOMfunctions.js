@@ -30,6 +30,8 @@ export function createTodoDialog(event) {
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
     legendName = document.querySelector(".projectName").value.replace(/[^a-zA-Z0-9-_]/g, ''); // Adds project name to legendName variable
+    legend.style.fontSize="3vh";
+    legend.style.fontWeight="600";
     legend.textContent = legendName;
 
     const container = document.createElement("div");
@@ -112,12 +114,14 @@ export function createTodoDialog(event) {
     addButton.id = "add";
     addButton.classList.add("add");
     addButton.style.borderRadius="8px"
+    addButton.style.border="2px solid green"
     addButton.textContent = "Add";
 
     const cancelButton = document.createElement("button");
     cancelButton.classList.add("cancel");
     cancelButton.id = "cancel";
     cancelButton.style.borderRadius="8px"
+    cancelButton.style.border="2px solid red"
     cancelButton.textContent = "Cancel";
     cancelButton.setAttribute("type", "button");
 
@@ -262,12 +266,16 @@ export function writeBackToDOM(event){
     saveButton.id = "saveChanges";
     saveButton.classList.add(projectTitle);
     saveButton.classList.add(taskID);
+    saveButton.style.borderRadius="8px"
+    saveButton.style.border="2px solid green"
     saveButton.textContent = "Save"; 
 
     const delButton = document.createElement("button");
     delButton.id = "delete";
     delButton.classList.add(projectTitle);
     delButton.classList.add(taskID);
+    delButton.style.borderRadius="8px"
+    delButton.style.border="2px solid red"
     delButton.textContent = "Delete";
 
     // Remove all children
@@ -296,14 +304,36 @@ export function writeBackToDOM(event){
     switch (storedArray[projectTitle][index].priority){
         case "Low": 
             fieldset.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
+            container.style.backgroundColor  = "rgba(0, 0, 255, 0)";
             fieldset.style.color  = "aliceblue";
+            titleLabel.style.color = "aliceblue";
+            descLabel.style.color = "aliceblue";
+            dueDateLabel.style.color = "aliceblue";
+            priorityLabel.style.color = "aliceblue";
+            notesLabel.style.color = "aliceblue";
+            checkboxLabel.style.color = "aliceblue";
             break;
         case "Medium": 
             fieldset.style.backgroundColor  = "rgba(255, 255, 0, 0.75)";
-            fieldset.style.color  = "black";
+            container.style.backgroundColor  = "rgba(255, 255, 0, 0)";
+            titleLabel.style.color = "black";
+            descLabel.style.color = "black";
+            dueDateLabel.style.color = "black";
+            priorityLabel.style.color = "black";
+            notesLabel.style.color = "black";
+            checkboxLabel.style.color = "black";
+            fieldset.style.color = "black";
             break;
         case "High": 
-            fieldset.style.backgroundColor  = "rgba(255, 0, 0, 0.75)";
+            fieldset.style.backgroundColor  = "rgba(255, 0, 0, 0.5)";
+            container.style.backgroundColor  = "rgba(255, 0, 0, 0)";
+            titleLabel.style.color = "black";
+            descLabel.style.color = "black";
+            dueDateLabel.style.color = "black";
+            priorityLabel.style.color = "black";
+            notesLabel.style.color = "black";
+            checkboxLabel.style.color = "black";
+            fieldset.style.color = "black";
             fieldset.style.color  = "black";
             break;
         }
@@ -362,7 +392,10 @@ export function populateLeftPanel() {
 
         const projectDiv = document.createElement("div");
         projectDiv.classList.add(project);
-        projectDiv.textContent = project;
+        const projectDivText = document.createElement("div");
+        projectDivText.classList.add("text");
+        projectDivText.textContent = project;
+        projectDiv.append(projectDivText);
         storedArray[project].forEach(todo =>{
 
             // Task Div
