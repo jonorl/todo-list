@@ -154,7 +154,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     XButton.classList.add(projectTitleName);
     XButton.classList.add(taskID);
 
-    // Replace name references if different
+    // Replace name references if different (having same keys causes issues)
     if (projectTitle !== projectTitleName){
 
     projects[projectTitleName] = projects[projectTitle]
@@ -173,7 +173,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
             }
         };
     manipulateCSS(eventWithUpdatedClasses);
-    
+
     }
 
     else {
