@@ -457,7 +457,7 @@ export function manipulateCSS(event) {
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
 
-    let index = parseInt(projects[projectTitle].findIndex(project => project.id === taskID));
+    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
     buttons.forEach(btn => {
         switch (storedArray[projectTitle][index].priority){
