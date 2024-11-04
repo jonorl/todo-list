@@ -157,6 +157,9 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     // Replace name references if different (having same keys causes issues)
     if (projectTitle !== projectTitleName && !(projectTitleName in projects)){
 
+    console.log("case 1")
+
+    // This replaces the name of the project
     projects[projectTitleName] = projects[projectTitle]
     delete projects[projectTitle];
     projectTitle = projectTitleName;
@@ -178,13 +181,19 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     // if an existing task goes into an existing project, then it pushes it to that project instead of replacing it.
     else if (projectTitle !== projectTitleName && projectTitleName in projects){
 
-        projects[projectTitle].forEach(item => {
-            projects[projectTitleName].push(item);
-        });
+        console.log("case 2")
 
+        // projectTitle: Project1
+        // projectTitleName: Project2
+
+        projects[projectTitleName].push(projects[projectTitle][index]); //Project1 has now task 2
+
+        projects[projectTitle].splice(index, 1); //Project2 has now task 2 deleted
+
+        if(projects[projectTitle][index] === undefined){
+        console.log("empty project")
         delete projects[projectTitle];
-        projectTitle = projectTitleName;
-        projects[projectTitle] = projects[projectTitleName]
+        }
         
         localStorage.setItem('todoArrayJSON', JSON.stringify(projects));
         projects = JSON.parse(localStorage.getItem('todoArrayJSON'));
@@ -201,6 +210,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     
 
     else {
+        console.log("case 3")
         populateLeftPanel();
         manipulateCSS(event);
     }
