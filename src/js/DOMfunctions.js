@@ -1,10 +1,7 @@
-// Module import
-
-import { storedArray } from "./auxFunctions.js";
+import {projects} from "./auxFunctions.js"
 
 // Global variables
 
-export let projects = {}; // This is the object that then will be passed as JSON
 export let legendName; // This stores the name of the project to verify if exists
 export let dialog; // this is the modal to enter the todo(s)
 
@@ -153,7 +150,7 @@ export function writeBackToDOM(event){
     let buttonClasses = event.target.className.split(" ") 
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
+    let index = projects[projectTitle].findIndex(project => project.id === taskID);
 
     // Main Container
     const rightContainer = document.querySelector(".right-panel")
@@ -182,7 +179,7 @@ export function writeBackToDOM(event){
     const titleInput = document.createElement("input");
     titleInput.classList.add("title-input");
     titleInput.setAttribute("type", "text");
-    titleInput.setAttribute("value", storedArray[projectTitle][index].title)
+    titleInput.setAttribute("value", projects[projectTitle][index].title)
     titleDiv.append(titleLabel, titleInput);
 
     // Description div
@@ -194,7 +191,7 @@ export function writeBackToDOM(event){
     const descInput = document.createElement("input");
     descInput.classList.add("description-input");
     descInput.setAttribute("type", "text")
-    descInput.setAttribute("value", storedArray[projectTitle][index].description)
+    descInput.setAttribute("value", projects[projectTitle][index].description)
     descDiv.append(descLabel, descInput);
 
     // Due Date div
@@ -206,7 +203,7 @@ export function writeBackToDOM(event){
     const dueDateInput = document.createElement("input");
     dueDateInput.classList.add("dueDate-input");
     dueDateInput.setAttribute("type", "date");
-    dueDateInput.setAttribute("value", storedArray[projectTitle][index].dueDate);
+    dueDateInput.setAttribute("value", projects[projectTitle][index].dueDate);
     dueDateDiv.append(dueDateLabel, dueDateInput);
 
     // Priority div
@@ -228,7 +225,7 @@ export function writeBackToDOM(event){
 
     options.forEach(opt => {
         const option = document.createElement("option");
-        let priority = storedArray[projectTitle][index].priority;
+        let priority = projects[projectTitle][index].priority;
         option.value = opt.value;
         option.textContent = opt.text;
         if (priority === opt.value) {option.selected = true}
@@ -245,7 +242,7 @@ export function writeBackToDOM(event){
     const notesInput = document.createElement("input");
     notesInput.classList.add("notes-input");
     notesInput.setAttribute("type", "text");
-    notesInput.setAttribute("value", storedArray[projectTitle][index].notes)
+    notesInput.setAttribute("value", projects[projectTitle][index].notes)
     notesDiv.append(notesLabel, notesInput);
 
     // Checklist
@@ -257,7 +254,7 @@ export function writeBackToDOM(event){
     const checkbox = document.createElement("input");
     checkbox.classList.add("checkbox-input");
     checkbox.setAttribute("type", "checkbox");
-    checkbox.checked = storedArray[projectTitle][index].checkbox;
+    checkbox.checked = projects[projectTitle][index].checkbox;
     checkboxDiv.append(checkboxLabel, checkbox);
 
     // Buttons
@@ -301,7 +298,7 @@ export function writeBackToDOM(event){
 
     rightContainer.appendChild(form);
 
-    switch (storedArray[projectTitle][index].priority){
+    switch (projects[projectTitle][index].priority){
         case "Low": 
             fieldset.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
             container.style.backgroundColor  = "rgba(0, 0, 255, 0)";
@@ -346,14 +343,14 @@ export function XDelete(event){
     let buttonClasses = event.target.className.split(" ");
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let index = parseInt(projects[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`.${projectTitle}[class*=" ${taskID}"]`);
     buttons.forEach(button => button.remove());
 
-    // I need to modify both projects and storedArray
+    // I need to modify both projects and projects
     projects[projectTitle].splice(index, 1);
-    storedArray[projectTitle].splice(index, 1);
-    localStorage.setItem("todoArrayJSON", JSON.stringify(storedArray));
+    projects[projectTitle].splice(index, 1);
+    localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
 
     removeTaskDetails();
 }
@@ -386,9 +383,9 @@ export function populateLeftPanel() {
     projectDivTitle.textContent = "Projects";
     projectsDiv.appendChild(projectDivTitle)
 
-    // Loop through each object project in storedArray and each of its todo's
+    // Loop through each object project in projects and each of its todo's
 
-    for (let project in storedArray){
+    for (let project in projects){
 
         const projectDiv = document.createElement("div");
         projectDiv.classList.add(project);
@@ -397,7 +394,7 @@ export function populateLeftPanel() {
         projectDivText.classList.add(project);
         projectDivText.textContent = project;
         projectDiv.append(projectDivText);
-        storedArray[project].forEach(todo =>{
+        projects[project].forEach(todo =>{
 
             // Task Div
             const taskButton = document.createElement("button");
@@ -457,10 +454,10 @@ export function manipulateCSS(event) {
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
 
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let index = parseInt(projects[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`)
     buttons.forEach(btn => {
-        switch (storedArray[projectTitle][index].priority){
+        switch (projects[projectTitle][index].priority){
             case "Low": 
                 btn.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
                 btn.style.color  = "aliceblue";
@@ -481,10 +478,10 @@ export function manipulateCSSModal(newID) {
     let projectTitle = legendName;
     let taskID = newID;
 
-    let index = parseInt(storedArray[projectTitle].findIndex(project => project.id === taskID));
+    let index = parseInt(projects[projectTitle].findIndex(project => project.id === taskID));
     let buttons = document.querySelectorAll(`button:not([id*='modal']).${projectTitle}[class*=" ${taskID}"]`);
     buttons.forEach(btn => {
-        switch (storedArray[projectTitle][index].priority){
+        switch (projects[projectTitle][index].priority){
             case "Low": 
                 btn.style.backgroundColor  = "rgba(0, 0, 255, 0.75)";
                 btn.style.color  = "aliceblue";

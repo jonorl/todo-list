@@ -1,12 +1,12 @@
 // Module import
 
 import {todo} from "./constructors.js"
-import {populateLeftPanel, legendName, projects, removeTaskDetails, manipulateCSSModal, manipulateCSS, dialog} from "./DOMfunctions.js"
+import {populateLeftPanel, legendName, removeTaskDetails, manipulateCSSModal, manipulateCSS, dialog} from "./DOMfunctions.js"
 
 // Global variables
 
+export let projects = {}; // This is the object that then will be passed as JSON
 let todoArray = []; // This will store the individual todo task
-export let storedArray; // This is the JSON saved in local storage
 
 // Auxiliary functions
 
@@ -73,7 +73,7 @@ function addTodoToJSON(title, description, dueDate, priority, notes) {
 
     // Adds Project/todo to localstorage as JSON
     localStorage.setItem("todoArrayJSON", JSON.stringify(projects));
-    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+    projects = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     populateLeftPanel();
     manipulateCSSModal(newID);
@@ -125,7 +125,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     let buttonClasses = event.target.className.split(" ")
     let projectTitle = buttonClasses[0];
     let taskID = buttonClasses[1];
-    let index = storedArray[projectTitle].findIndex(project => project.id === taskID);
+    let index = projects[projectTitle].findIndex(project => project.id === taskID);
 
     // Update values of projects Object
     projects[projectTitle][index].title = title;
@@ -136,12 +136,12 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     projects[projectTitle][index].checkbox = checkbox;
 
     // Update values of stored JSON
-    storedArray[projectTitle][index].title = title;
-    storedArray[projectTitle][index].description = description;
-    storedArray[projectTitle][index].dueDate = dueDate;
-    storedArray[projectTitle][index].priority = priority;
-    storedArray[projectTitle][index].notes = notes;
-    storedArray[projectTitle][index].checkbox = checkbox;
+    projects[projectTitle][index].title = title;
+    projects[projectTitle][index].description = description;
+    projects[projectTitle][index].dueDate = dueDate;
+    projects[projectTitle][index].priority = priority;
+    projects[projectTitle][index].notes = notes;
+    projects[projectTitle][index].checkbox = checkbox;
 
     // Update the name of the task button and their class names as well
     let taskButton = document.querySelector(`#task.${projectTitle}[class*=" ${taskID}"]`);
@@ -163,7 +163,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     projects[projectTitle] = projects[projectTitleName]
 
     localStorage.setItem('todoArrayJSON', JSON.stringify(projects));
-    storedArray = JSON.parse(localStorage.getItem('todoArrayJSON'));
+    projects = JSON.parse(localStorage.getItem('todoArrayJSON'));
 
     populateLeftPanel();
 
