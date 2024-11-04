@@ -155,7 +155,7 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
     XButton.classList.add(taskID);
 
     // Replace name references if different (having same keys causes issues)
-    if (projectTitle !== projectTitleName){
+    if (projectTitle !== projectTitleName && !(projectTitleName in projects)){
 
     projects[projectTitleName] = projects[projectTitle]
     delete projects[projectTitle];
@@ -173,8 +173,32 @@ function EditJSON(event, projectTitleName, title, description, dueDate, priority
             }
         };
     manipulateCSS(eventWithUpdatedClasses);
-
     }
+
+    // if an existing task goes into an existing project, then it pushes it to that project instead of replacing it.
+    else if (projectTitle !== projectTitleName && projectTitleName in projects){
+
+        projects[projectTitle].forEach(item => {
+            projects[projectTitleName].push(item);
+        });
+
+        delete projects[projectTitle];
+        projectTitle = projectTitleName;
+        projects[projectTitle] = projects[projectTitleName]
+        
+        localStorage.setItem('todoArrayJSON', JSON.stringify(projects));
+        projects = JSON.parse(localStorage.getItem('todoArrayJSON'));
+
+        populateLeftPanel();
+
+        let eventWithUpdatedClasses = {
+            target: {
+                className: `${projectTitleName} ${taskID}`
+                }
+            };
+        manipulateCSS(eventWithUpdatedClasses);
+        }
+    
 
     else {
         populateLeftPanel();
